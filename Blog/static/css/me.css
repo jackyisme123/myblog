@@ -9,6 +9,14 @@ body{
     padding: 0.3em !important;
 }
 
+.m-padded-small{
+    padding: 0.5em !important;
+}
+
+.m-padded{
+    padding: 1em !important;
+}
+
 .m-padded-tb-mini {
     padding-top: 0.2em !important;
     padding-bottom: 0.2em !important;
@@ -137,6 +145,17 @@ body{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
+/*-----position-----*/
+.m-fixed {
+    position: fixed !important;
+    z-index: 10 !important;
+}
+
+.m-right-bottom {
+    bottom:0 !important;
+    right: 0 !important;
+}
+
 /*-----color-----*/
 .m-black{
     color: #333 !important;
@@ -171,4 +190,6 @@ body{
 
 
 }
+
+
 
