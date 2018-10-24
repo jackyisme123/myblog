@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuan & Rui's blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+<!--nav bar-->
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui inverted secondary stackable menu">
+        <div class="ui container">
+            <h2 class="ui teal header item">Blog Management</h2>
+            <a href="#" class="item active m-mobile-hide toggle_item"><i class="mini home icon"></i>Blog</a>
+            <a href="#" class="item m-mobile-hide toggle_item"><i class="mini idea icon"></i>Category</a>
+            <a href="#" class="item m-mobile-hide toggle_item"><i class="mini tags icon"></i>Tags</a>
+            <div class="right toggle_item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/100/100?image=1005">
+                        Jacky
+                        <i class="dropdown icon"></i>
+                    </div>
+                    <div class="menu">
+                        <a href="#" class="item">signoff</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui black icon button m-right-top m-mobile-show menu_toggle">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!-- second nav -->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/types/input}" class="item">Add</a>
+            <a href="#" th:href="@{/admin/types}" class="active teal item">List</a>
+        </div>
+    </div>
+</div>
+<!--content-->
+<div class="m-padded-tb-large m-container-small">
+    <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">Success:</div>
+            <p th:text="${message}">Successful Operation</p>
+        </div>
+        <table class="ui compact teal table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>name</th>
+                <th>operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="type, iterStat: ${page.content}">
+                <td th:text="${iterStat.count}">1</td>
+                <td th:text="${type.name}">abcd</td>
+                <td>
+                    <a href="#" th:href="@{/admin/types/{id}/input(id=${type.id})}" class="ui mini teal basic button">Edit</a>
+                    <a href="#" th:href="@{/admin/types/{id}/delete(id=${type.id})}" class="ui mini red basic button">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6" >
+                    <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
+                        <a th:href="@{/admin/types(page=${page.number}-1)}" th:unless="${page.first}" class="item">Previous</a>
+                        <a th:href="@{/admin/types(page=${page.number}+1)}" th:unless="${page.last}" class="item">Next</a>
+                    </div>
+                    <a href="#" th:href="@{/admin/types/input}" class="ui right floated teal mini basic button">Add</a>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<br>
+<br>
+
+<!--footer-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted segment vertical m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui stackable grid divided inverted">
+            <div class="two wide column">
+                <div class="inverted ui link list">
+                    <div class="item">
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="QR code"
+                             style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Latest Blogs</h4>
+                <div class="inverted ui link list">
+                    <a href="#" class="item">???</a>
+                    <a href="#" class="item">???</a>
+                    <a href="#" class="item">???</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Contact</h4>
+                <div class="inverted ui link list">
+                    <a href="#" class="item">Email Address: jackyisme123@gmail.com</a>
+                    <a href="#" class="item">QQ: 13715772</a>
+                    <a href="#" class="item">Wechat: nicuige</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Why Blog</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">This is a personal blog for Rui and Yuan. We will
+                    share our lives in NZ including it, wine, cooking, travelling and maybe some immigration
+                    information. Hope our information could help you a little bit ...</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2018 Yuan & Rui's Blog Designed by Yuan</p>
+    </div>
+</footer>
+    <!--/*/<th:block th:replace="_fragments :: script">/*/-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.js"></script>
+    <!--/*/</th:block>/*/-->
+<script>
+    $(".menu_toggle").click(function () {
+        $(".toggle_item").toggleClass("m-mobile-hide");
+    });
+
+    $(".ui.dropdown").dropdown({
+        on: 'hover'
+    });
+
+    $('.message .close').on("click", function () {
+        $(this).closest('.message').transition('fade');
+    });
+
+</script>
+</body>
+</html>

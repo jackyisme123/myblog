@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuan & Rui's blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+<!--nav bar-->
+<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui inverted secondary stackable menu">
+        <div class="ui container">
+            <h2 class="ui teal header item">Blog Management</h2>
+            <a href="#" class="item active m-mobile-hide toggle_item"><i class="mini home icon"></i>Blog</a>
+            <a href="#" class="item m-mobile-hide toggle_item"><i class="mini idea icon"></i>Category</a>
+            <a href="#" class="item m-mobile-hide toggle_item"><i class="mini tags icon"></i>Tags</a>
+            <div class="right toggle_item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/100/100?image=1005">
+                        Jacky
+                        <i class="dropdown icon"></i>
+                    </div>
+                    <div class="menu">
+                        <a href="#" class="item">signoff</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui black icon button m-right-top m-mobile-show menu_toggle">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!-- second nav -->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="item">Publish</a>
+            <a href="#" class="active teal item">List</a>
+        </div>
+    </div>
+</div>
+<!--content-->
+<div class="m-padded-tb-large m-container-small">
+    <div class="ui container">
+        <div class="ui secondary segment form" method="post">
+            <input type="hidden" name="page">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="title">
+                </div>
+                <div class="field">
+                    <div class="ui labeled action input">
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">type</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">error message</div>
+                                <!--/*-->
+                                <div class="item" data-value="1">dev document</div>
+                                <div class="item" data-value="1">error message</div>
+                                <div class="item" data-value="1">error message</div>
+                                <div class="item" data-value="1">error message</div>
+                                <div class="item" data-value="1">error message</div>
+                                <!--*/-->
+                            </div>
+                        </div>
+                        <button id="clearButton" class="ui compact button">clear</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">recommend</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" id="searchButton" class="ui mini teal basic button"><i class="search icon"></i>Search</button>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <table th:fragment="blogList" class="ui compact teal table">
+                <thead>
+                <tr>
+                    <th ></th>
+                    <th>title</th>
+                    <th>type</th>
+                    <th>recommend</th>
+                    <th>published</th>
+                    <th>update time</th>
+                    <th>operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog, iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">abcd</td>
+                    <td th:text="${blog.type.name}">adfadsf</td>
+                    <td th:text="${blog.recommend} ? 'True' : 'False'">True</td>
+                    <td th:text="${blog.published} ? 'Published' : 'Draft'">True</td>
+                    <td th:text="${blog.updateTime}">2017-10-2 09:45</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
+                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
+                        </div>
+                        <a href="#" th:href="@{/admin/blogs/input}" class="ui right floated teal mini basic button">Add</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">Info: </div>
+                <p th:text="${message}">Congratulations, Successful operation</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<!--footer-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted segment vertical m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui stackable grid divided inverted">
+            <div class="two wide column">
+                <div class="inverted ui link list">
+                    <div class="item">
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="QR code"
+                             style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Latest Blogs</h4>
+                <div class="inverted ui link list">
+                    <a href="#" class="item">???</a>
+                    <a href="#" class="item">???</a>
+                    <a href="#" class="item">???</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Contact</h4>
+                <div class="inverted ui link list">
+                    <a href="#" class="item">Email Address: jackyisme123@gmail.com</a>
+                    <a href="#" class="item">QQ: 13715772</a>
+                    <a href="#" class="item">Wechat: nicuige</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted head m-text-thin m-text-spaced">Why Blog</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">This is a personal blog for Rui and Yuan. We will
+                    share our lives in NZ including it, wine, cooking, travelling and maybe some immigration
+                    information. Hope our information could help you a little bit ...</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2018 Yuan & Rui's Blog Designed by Yuan</p>
+    </div>
+</footer>
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $(".menu_toggle").click(function () {
+        $(".toggle_item").toggleClass("m-mobile-hide");
+    });
+
+    $(".ui.dropdown").dropdown({
+        on: 'hover'
+    });
+
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loadData();
+    }
+
+    function loadData() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+
+    $("#searchButton").click(function () {
+        $('[name="page"]').val(0);
+        loadData();
+    });
+
+    $("#clearButton").on('click', function () {
+        $('.type.ui.dropdown').dropdown('clear');
+    });
+
+    $('.message .close').on('click', function () {
+        $(this).closest('.message').transition('fade');
+    });
+
+</script>
+</body>
+</html>
