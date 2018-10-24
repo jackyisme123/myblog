@@ -1,19 +1,20 @@
-body{
+body {
     background: url("../images/bg.png") !important;
 }
-.m-padded-mini{
+
+.m-padded-mini {
     padding: 0.2em !important;
 }
 
-.m-padded-tiny{
+.m-padded-tiny {
     padding: 0.3em !important;
 }
 
-.m-padded-small{
+.m-padded-small {
     padding: 0.5em !important;
 }
 
-.m-padded{
+.m-padded {
     padding: 1em !important;
 }
 
@@ -21,36 +22,43 @@ body{
     padding-top: 0.2em !important;
     padding-bottom: 0.2em !important;
 }
-.m-padded-tb-tiny{
+
+.m-padded-tb-tiny {
     padding-top: 0.3em !important;
     padding-bottom: 0.3em !important;
 }
-.m-padded-tb-small{
+
+.m-padded-tb-small {
     padding-top: 0.5em !important;
     padding-bottom: 0.5em !important;
 }
-.m-padded-tb{
+
+.m-padded-tb {
     padding-top: 1em !important;
     padding-bottom: 1em !important;
 }
-.m-padded-tb-big{
-     padding-top: 2em !important;
-     padding-bottom: 2em !important;
- }
-.m-padded-tb-large{
-      padding-top: 3em !important;
-      padding-bottom: 3em !important;
-  }
-.m-padded-tb-huge{
-       padding-top: 4em !important;
-       padding-bottom: 4em !important;
-   }
-.m-padded-tb-large{
-        padding-top: 5em !important;
-        padding-bottom: 5em !important;
-    }
 
-.m-padded-tb-massive{
+.m-padded-tb-big {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-tb-huge {
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.m-padded-tb-massive {
     padding-top: 5em !important;
     padding-bottom: 5em !important;
 }
@@ -66,75 +74,75 @@ body{
 }
 
 /*-------------text_-------------*/
-.m-text-thin{
+.m-text-thin {
     font-weight: 300 !important;
 }
 
-.m-text-spaced{
+.m-text-spaced {
     letter-spacing: 1px !important;
 }
 
-.m-text-lined{
+.m-text-lined {
     line-height: 1.8 !important;
 }
 
-.m-text{
+.m-text {
     font-weight: 300 !important;
     letter-spacing: 1px !important;
     line-height: 1.8 !important;
 }
 
 /*------margin---------*/
-.m-margin-tb-tiny{
+.m-margin-tb-tiny {
     margin-top: 0.3em !important;
     margin-bottom: 0.3em !important;
 }
 
-.m-margin-top-small{
+.m-margin-top-small {
     margin-top: 0.5em !important;
 }
 
-.m-margin-top{
+.m-margin-top {
     margin-top: 1em !important;
 }
 
-.m-margin-top-large{
+.m-margin-top-large {
     margin-top: 2em !important;
 }
 
-.m-margin-bottom-small{
+.m-margin-bottom-small {
     margin-bottom: 0.5em !important;
 }
 
 /*-----opacity-----*/
 
-.m-opacity-mini{
-     opacity: 0.8 !important;
- }
+.m-opacity-mini {
+    opacity: 0.8 !important;
+}
 
-.m-opacity-tiny{
+.m-opacity-tiny {
     opacity: 0.6 !important;
 }
 
 /*-----position-----*/
-.m-right-top{
+.m-right-top {
     position: absolute;
     top: 20px;
     right: 20px;
 }
 
 /*-----------display-------------*/
-.m-inline-block{
+.m-inline-block {
     display: inline-block !important;
 }
 
 /*-----container-----*/
-.m-container{
+.m-container {
     max-width: 72em !important;
     margin: auto !important;
 }
 
-.m-container-small{
+.m-container-small {
     max-width: 60em !important;
     margin: auto !important;
 }
@@ -152,26 +160,26 @@ body{
 }
 
 .m-right-bottom {
-    bottom:0 !important;
+    bottom: 0 !important;
     right: 0 !important;
 }
 
 /*-----color-----*/
-.m-black{
+.m-black {
     color: #333 !important;
 }
 
 .m-mobile-show {
-    display:none !important;
+    display: none !important;
 }
 
-@media screen and (max-width: 768px){
-    .m-mobile-hide{
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
         display: none !important;
     }
 
     .m-mobile-show {
-        display:block !important;
+        display: block !important;
     }
 
     .m-padded-lr-responsive {
@@ -179,7 +187,7 @@ body{
         padding-right: 0 !important;
     }
 
-    .m-mobile-wide{
+    .m-mobile-wide {
         width: 100% !important;
     }
 
@@ -187,7 +195,6 @@ body{
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-
 
 }
 
