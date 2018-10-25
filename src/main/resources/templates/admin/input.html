@@ -79,7 +79,7 @@
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">Type</label>
                         <div class="ui fluid selection dropdown">
-                            <input type="hidden" name="type.id" th:value="*{type.id}">
+                            <input type="hidden" name="type.id" th:value="*{type}!=null ? *{type.id}">
                             <i class="dropdown icon"></i>
                             <div class="default text">Type</div>
                             <div class="menu">
@@ -97,7 +97,7 @@
                 <div class="field">
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">Tag</label>
-                        <div class="ui fluid multiple search selection dropdown">
+                        <div class="ui fluid multiple search selection dropdown" id="allowAdditions">
                             <input type="hidden" name="tagIds" th:value="*{tagIds}">
                             <i class="dropdown icon"></i>
                             <div class="default text">Tag</div>
@@ -119,6 +119,10 @@
                     <label class="ui teal basic label">First Image</label>
                     <input type="text" name="firstPicture" placeholder="First image address" th:value="*{firstPicture}">
                 </div>
+            </div>
+
+            <div class="required field">
+                <textarea name="description" th:text="*{description}" placeholder="Blog Description..." maxlength="200"></textarea>
             </div>
 
             <div class="inline fields">
@@ -208,8 +212,18 @@
 <script src="../../static/lib/editormd/editormd.min.js"></script>
 <!--/*/</th:block>/*/-->
 <script>
+
+    var tagPass = [];
     //Initialize markdown editor
     var contentEditor;
+
+    function stringToArray(string){
+        return string.split(',');
+    }
+
+    function arrayToString(array){
+        return array.join();
+    }
 
     $(function () {
         contentEditor = editormd("md-content", {
@@ -262,19 +276,61 @@
                     type: 'empty',
                     prompt: 'please enter address of first picture.'
                 }]
+            },
+            description: {
+                identifier: 'description',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'please enter description of blog.'
+                }]
             }
         }
     });
 
+    function dealWithSpecialNumberTag(){
+        var value = $('#allowAdditions').dropdown("get value");
+        var valueArray = stringToArray(value);
+        for (var i in valueArray){
+            if (tagPass.indexOf(valueArray[i])!=-1){
+                valueArray[i] = "$" + valueArray[i] + "&";
+            }
+        }
+        var newValue = arrayToString(valueArray);
+        $('#allowAdditions').dropdown("set value", newValue);
+    }
+
     $('#save-btn').click(function () {
+        dealWithSpecialNumberTag();
         $('[name="published"]').val(false);
         $('#blog-form').submit();
     });
 
     $('#publish-btn').click(function () {
+        dealWithSpecialNumberTag();
         $('[name="published"]').val(true);
         $('#blog-form').submit();
     });
+
+    $('#allowAdditions').dropdown({
+        allowAdditions: true,
+        ignoreCase: true,
+        onChange: function(value, text, $choice) {
+            var index = tagPass.indexOf(text);
+                if(index == -1 && typeof text != "undefined"){
+                    if(text == $choice && !isNaN(Number(text))){
+                        tagPass.push(text);
+                    }
+                }else if(typeof text == "undefined"){
+                    for (var n in tagPass){
+                        if (!value.includes(tagPass[n])){
+                            tagPass.splice(n, 1);
+                            break;
+                        }
+                    }
+                }
+        }
+    });
+
 </script>
 </body>
 </html>

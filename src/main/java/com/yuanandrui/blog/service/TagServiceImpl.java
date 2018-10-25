@@ -53,7 +53,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTagTop(Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+        Sort sort = new Sort(Sort.Direction.DESC, "blogs.size");
         Pageable pageable = PageRequest.of(0, size, sort);
 //        Pageable pageable = new PageRequest(0, size, sort);
         return tagRepository.findTop(pageable);
@@ -70,10 +70,29 @@ public class TagServiceImpl implements TagService {
         if (!"".equals(ids) && ids != null) {
             String[] idarray = ids.split(",");
             for (int i = 0; i < idarray.length; i++) {
-                list.add(Long.valueOf(idarray[i]));
+                String temp = idarray[i];
+                Long addTagId;
+                if(isNumeric(temp)){
+                    addTagId = Long.valueOf(temp);
+                }else{
+                    if (temp.startsWith("$") && temp.endsWith("&")){
+                        temp = temp.substring(1, temp.length()-1);
+                    }
+                    Tag tag = new Tag();
+                    tag.setName(temp);
+                    addTagId = saveTag(tag).getId();
+                }
+                list.add(addTagId);
             }
         }
         return list;
+    }
+
+    private final static boolean isNumeric(String s) {
+        if (s != null && !"".equals(s.trim()))
+            return s.matches("^[0-9]*$");
+        else
+            return false;
     }
 
 

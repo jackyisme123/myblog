@@ -83,12 +83,24 @@ public class BlogController {
         blog.setUser((User)session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()).get());
         blog.setTags(tagService.listTag(blog.getTagIds()));
-        Blog b = blogService.saveBlog(blog);
+        Blog b;
+        if(blog.getId() == 0){
+            b = blogService.saveBlog(blog);
+        }else{
+            b = blogService.updateBlog(blog.getId(), blog);
+        }
         if (b == null){
             attributes.addFlashAttribute("message", "Failure operation");
         }else{
             attributes.addFlashAttribute("message", "Successful operation");
         }
+        return REDIRECT_LIST;
+    }
+
+    @GetMapping("/blogs/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes attributes){
+        blogService.deleteBlog(id);
+        attributes.addFlashAttribute("message", "success to delete");
         return REDIRECT_LIST;
     }
 }

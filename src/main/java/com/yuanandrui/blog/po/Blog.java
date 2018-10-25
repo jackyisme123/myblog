@@ -25,6 +25,8 @@ public class Blog {
     private boolean commentabled;
     private boolean published;
     private boolean recommend;
+    private String description;
+
 
     //not be built in database
     @Transient
@@ -194,6 +196,14 @@ public class Blog {
         this.updateTime = updateTime;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void init(){
         this.tagIds = tagsToIds(this.getTags());
     }
@@ -215,10 +225,9 @@ public class Blog {
             return tagIds;
     }
 
-
     @Override
     public String toString() {
-        return "blog{" +
+        return "Blog{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
@@ -230,8 +239,16 @@ public class Blog {
                 ", commentabled=" + commentabled +
                 ", published=" + published +
                 ", recommend=" + recommend +
+                ", description='" + description + '\'' +
+                ", tagIds='" + tagIds + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
                 '}';
     }
+
+
 }
