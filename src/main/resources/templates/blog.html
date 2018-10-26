@@ -41,34 +41,34 @@
         <div class="ui segment top attached">
             <div class="ui link list horizontal mini">
                 <div class="item">
-                    <img src="https://picsum.photos/100/100?image=1005" alt="" class="ui avatar image">
+                    <img src="https://picsum.photos/100/100?image=1005" alt="" class="ui avatar image" th:src="@{${blog.user.avatar}}">
                     <div class="content">
-                        <a href="#" class="header">Jacky</a>
+                        <a href="#" class="header" th:text="${blog.user.nickname}">Jacky</a>
                     </div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i> 2017-10-1
+                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2017-10-1</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i> 2342
+                    <i class="eye icon"></i> <span th:text="${blog.views}">2342</span>
                 </div>
             </div>
         </div>
         <!--image-->
         <div class="ui segment attached">
-            <img src="https://picsum.photos/800/450?image=1005" alt="" class="ui fluid rounded image">
+            <img src="https://picsum.photos/800/450?image=1005" alt="" class="ui fluid rounded image" th:src="@{${blog.firstPicture}}">
         </div>
         <!--content-->
         <div class="ui segment attached padded">
             <div class="ui segment right aligned basic">
-                <div class="ui orange label ">
+                <div class="ui orange label " th:text="${blog.flag}">
                     original
                 </div>
             </div>
-            <h2 class="ui header center aligned">Algorithm</h2>
-            <pre><code class="language-css">p {color : red}</code></pre>
+            <h2 class="ui header center aligned" th:text="${blog.title}">Algorithm</h2>
             <br>
-            <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb js-toc-content">
+            <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb js-toc-content" th:utext="${blog.content}">
+                <!--/*-->
                 <h2 id="section1">abch1</h2>
                 <p>As an <a href="/wiki/Effective_method" title="Effective method">effective method</a>, an algorithm
                     can be expressed within a finite amount of space and time<sup id="cite_ref-1" class="reference"><a
@@ -392,10 +392,11 @@
                     <a href="/wiki/Alexander_of_Villedieu" title="Alexander of Villedieu">Alexandre de Villedieu</a>. It
                     begins thus:
                 </p>
+                <!--*/-->
             </div>
             <!--tags-->
             <div class="m-padded-lr-responsive">
-                <a href="#" class="ui teal left pointing label">IT</a>
+                <a href="#" class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">IT</a>
             </div>
             <!--tips-->
             <div class="ui segment center aligned basic">
@@ -406,12 +407,12 @@
                     <div class="ui images" style="font-size: inherit !important; ">
                         <div class="image">
                             <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
+                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
                             <div>AliPay</div>
                         </div>
                         <div class="image">
                             <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
+                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
                             <div>WeChat</div>
                         </div>
                     </div>
@@ -424,97 +425,101 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>Author: Yuan</li>
-                        <li>Post Date: 1999-9-9</li>
+                        <li>Author: <a href="" target="_blank" th:href="@{/about}"><span th:text="${blog.user.nickname}">Yuan</span></a></li>
+                        <li>Post Date: <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}">1999-9-9</span></li>
                         <li>版权声明: abc</li>
                         <li>Forward: Add QRcode</li>
                     </ui>
                 </div>
                 <div class="five wide column">
                     <img src="../static/images/wechat.jpg" alt="" class="ui right floated rounded bordered image"
-                         style="width: 110px">
+                         style="width: 110px" th:src="@{/images/wechat.jpg}">
                 </div>
             </div>
         </div>
-        <div id="comment-container" class="ui bottom attached segment">
+        <div class="ui bottom attached segment">
             <!--comment list-->
-            <div class="ui segment teal">
-                <div class="ui comments">
-                    <h3 class="ui dividing header">Comments</h3>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://picsum.photos/100/100?image=1005">
-                        </a>
-                        <div class="content">
-                            <a class="author">Matt</a>
-                            <div class="metadata">
-                                <span class="date">Today at 5:42PM</span>
-                            </div>
-                            <div class="text">
-                                How artistic!
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://picsum.photos/100/100?image=1005">
-                        </a>
-                        <div class="content">
-                            <a class="author">Elliot Fu</a>
-                            <div class="metadata">
-                                <span class="date">Yesterday at 12:30AM</span>
-                            </div>
-                            <div class="text">
-                                <p>This has been very useful for my research. Thanks as well!</p>
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
+            <div class="ui segment teal" id="comment-container">
+                <div th:fragment="commentList">
+                    <div class="ui threaded comments" style="max-width: 100%">
+                        <h3 class="ui dividing header">Comments</h3>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="https://picsum.photos/100/100?image=1005">
+                            </a>
+                            <div class="content">
+                                <a class="author">Matt</a>
+                                <div class="metadata">
+                                    <span class="date">Today at 5:42PM</span>
+                                </div>
+                                <div class="text">
+                                    How artistic!
+                                </div>
+                                <div class="actions">
+                                    <a class="reply" onclick="reply(this)" data-commentid="1" data-commentnickname="Matt">Reply</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="comments">
-                            <div class="comment">
-                                <a class="avatar">
-                                    <img src="https://picsum.photos/100/100?image=1005">
-                                </a>
-                                <div class="content">
-                                    <a class="author">Jenny Hess</a>
-                                    <div class="metadata">
-                                        <span class="date">Just now</span>
-                                    </div>
-                                    <div class="text">
-                                        Elliot you are always so right :)
-                                    </div>
-                                    <div class="actions">
-                                        <a class="reply">Reply</a>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="https://picsum.photos/100/100?image=1005">
+                            </a>
+                            <div class="content">
+                                <a class="author">Elliot Fu</a>
+                                <div class="metadata">
+                                    <span class="date">Yesterday at 12:30AM</span>
+                                </div>
+                                <div class="text">
+                                    <p>This has been very useful for my research. Thanks as well!</p>
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
+                            </div>
+                            <div class="comments">
+                                <div class="comment">
+                                    <a class="avatar">
+                                        <img src="https://picsum.photos/100/100?image=1005">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author">Jenny Hess</a>
+                                        <div class="metadata">
+                                            <span class="date">Just now</span>
+                                        </div>
+                                        <div class="text">
+                                            Elliot you are always so right :)
+                                        </div>
+                                        <div class="actions">
+                                            <a class="reply">Reply</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://picsum.photos/100/100?image=1005">
-                        </a>
-                        <div class="content">
-                            <a class="author">Joe Henderson</a>
-                            <div class="metadata">
-                                <span class="date">5 days ago</span>
-                            </div>
-                            <div class="text">
-                                Dude, this is awesome. Thanks so much
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img src="https://picsum.photos/100/100?image=1005">
+                            </a>
+                            <div class="content">
+                                <a class="author">Joe Henderson</a>
+                                <div class="metadata">
+                                    <span class="date">5 days ago</span>
+                                </div>
+                                <div class="text">
+                                    Dude, this is awesome. Thanks so much
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!--submit form-->
-            <div class="ui form">
+            <div class="ui form" id="comment-form">
+                <input type="hidden" name="blog.id" th:value="${blog.id}">
+                <input type="hidden" name="parentComment.id" value="-1">
                 <div class="field">
                     <textarea name="content" placehold="Please enter comment here..."></textarea>
                 </div>
@@ -532,7 +537,7 @@
                         </div>
                     </div>
                     <div class="field m-margin-bottom-small m-mobile-wide">
-                        <button class="ui teal button m-mobile-wide"><i class="upload icon"></i>Publish</button>
+                        <button class="ui teal button m-mobile-wide" type="button" id="commentpost-btn"><i class="upload icon"></i>Publish</button>
                     </div>
                 </div>
             </div>
@@ -610,7 +615,7 @@
 <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
 <!--/*/</th:block>/*/-->
 
-<script>
+<script th:inline="javascript">
 
     $(".menu_toggle").click(function () {
         $(".toggle_item").toggleClass("m-mobile-hide");
@@ -639,8 +644,10 @@
         position: 'left center'
     });
 
+    var server = "127.0.0.1:8080";
+    var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
-        text: "http://jindo.dev.naver.com/collie",
+        text: server + url,
         width: 105,
         height: 105,
         colorDark: "#000000",
@@ -660,9 +667,70 @@
             } else {
                 $("#toolbar").hide(500);
             }
-            console.log('Scrolled to waypoint!')
         }
-    })
+    });
+
+    $('.ui.form').form({
+        fields: {
+            content: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'please enter a comment'
+                }]
+            },
+            name: {
+                identifier: 'nickname',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'please enter your name'
+                }]
+            },
+            email: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: 'please enter your email address'
+                }]
+            }
+        }
+    });
+
+    $("#commentpost-btn").click(function () {
+        var boo = $('.ui.form').form('validate form');
+        if(boo){
+            console.log("validation successful");
+        }else{
+            console.log("validation failure");
+        }
+    });
+
+    function postData(){
+        $("#comment-container").load(/*[[@{/comments}]]*/"", {
+            "parentComment.id": $("[name='parentComment.id']").val(),
+            "blog.id" : $("[name='blog.id']").val(),
+            "nickname" : $("[name='nickname']").val(),
+            "email" : $("[name='email']").val(),
+            "content" : $("[name='content']").val()
+            },function(responseTxt, statusTxt, xhr){
+            clearContent();
+            $(window).scrollTo($('#comment-container'), 500);
+        });
+    }
+    
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder", "");
+    }
+
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var commentNickname = $(obj).data('commentnickname');
+        $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'), 500);
+    }
 
 </script>
 </body>

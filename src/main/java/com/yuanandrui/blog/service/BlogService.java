@@ -11,9 +11,13 @@ import java.util.Optional;
 public interface BlogService {
     Optional<Blog> getBlog(Long id);
 
+    Blog getAndConvert(Long id);
+
     Page<Blog> listBlog(Pageable p, BlogQuery blog);
 
     Page<Blog> listBlog(Pageable p);
+
+    Page<Blog> listBlog(Pageable p, String query);
 
     List<Blog> listRecommendBlogTop(Integer size);
 

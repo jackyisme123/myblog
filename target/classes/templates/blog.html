@@ -41,34 +41,34 @@
         <div class="ui segment top attached">
             <div class="ui link list horizontal mini">
                 <div class="item">
-                    <img src="https://picsum.photos/100/100?image=1005" alt="" class="ui avatar image">
+                    <img src="https://picsum.photos/100/100?image=1005" alt="" class="ui avatar image" th:src="@{${blog.user.avatar}}">
                     <div class="content">
-                        <a href="#" class="header">Jacky</a>
+                        <a href="#" class="header" th:text="${blog.user.nickname}">Jacky</a>
                     </div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i> 2017-10-1
+                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2017-10-1</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i> 2342
+                    <i class="eye icon"></i> <span th:text="${blog.views}">2342</span>
                 </div>
             </div>
         </div>
         <!--image-->
         <div class="ui segment attached">
-            <img src="https://picsum.photos/800/450?image=1005" alt="" class="ui fluid rounded image">
+            <img src="https://picsum.photos/800/450?image=1005" alt="" class="ui fluid rounded image" th:src="@{${blog.firstPicture}}">
         </div>
         <!--content-->
         <div class="ui segment attached padded">
             <div class="ui segment right aligned basic">
-                <div class="ui orange label ">
+                <div class="ui orange label " th:text="${blog.flag}">
                     original
                 </div>
             </div>
-            <h2 class="ui header center aligned">Algorithm</h2>
-            <pre><code class="language-css">p {color : red}</code></pre>
+            <h2 class="ui header center aligned" th:text="${blog.title}">Algorithm</h2>
             <br>
-            <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb js-toc-content">
+            <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb js-toc-content" th:utext="${blog.content}">
+                <!--/*-->
                 <h2 id="section1">abch1</h2>
                 <p>As an <a href="/wiki/Effective_method" title="Effective method">effective method</a>, an algorithm
                     can be expressed within a finite amount of space and time<sup id="cite_ref-1" class="reference"><a
@@ -392,10 +392,11 @@
                     <a href="/wiki/Alexander_of_Villedieu" title="Alexander of Villedieu">Alexandre de Villedieu</a>. It
                     begins thus:
                 </p>
+                <!--*/-->
             </div>
             <!--tags-->
             <div class="m-padded-lr-responsive">
-                <a href="#" class="ui teal left pointing label">IT</a>
+                <a href="#" class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">IT</a>
             </div>
             <!--tips-->
             <div class="ui segment center aligned basic">
@@ -406,12 +407,12 @@
                     <div class="ui images" style="font-size: inherit !important; ">
                         <div class="image">
                             <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
+                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
                             <div>AliPay</div>
                         </div>
                         <div class="image">
                             <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
+                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
                             <div>WeChat</div>
                         </div>
                     </div>
@@ -424,15 +425,15 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>Author: Yuan</li>
-                        <li>Post Date: 1999-9-9</li>
+                        <li>Author: <a href="" target="_blank" th:href="@{/about}"><span th:text="${blog.user.nickname}">Yuan</span></a></li>
+                        <li>Post Date: <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}">1999-9-9</span></li>
                         <li>版权声明: abc</li>
                         <li>Forward: Add QRcode</li>
                     </ui>
                 </div>
                 <div class="five wide column">
                     <img src="../static/images/wechat.jpg" alt="" class="ui right floated rounded bordered image"
-                         style="width: 110px">
+                         style="width: 110px" th:src="@{/images/wechat.jpg}">
                 </div>
             </div>
         </div>

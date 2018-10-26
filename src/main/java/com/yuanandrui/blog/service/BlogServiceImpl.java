@@ -4,6 +4,7 @@ import com.yuanandrui.blog.NotFoundException;
 import com.yuanandrui.blog.dao.BlogRepository;
 import com.yuanandrui.blog.po.Blog;
 import com.yuanandrui.blog.po.Type;
+import com.yuanandrui.blog.util.MarkdownUtils;
 import com.yuanandrui.blog.util.MyBeanUtils;
 import com.yuanandrui.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,20 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog getAndConvert(Long id) {
+        Optional<Blog> b = blogRepository.findById(id);
+        if(!b.isPresent()){
+            throw new NotFoundException("The blog is not existing");
+        }
+        Blog blog = b.get();
+        Blog blog1 = new Blog();
+        BeanUtils.copyProperties(blog, blog1);
+        String content = blog.getContent();
+        blog1.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+        return blog1;
+    }
+
+    @Override
     public Page<Blog> listBlog(Pageable pageable, BlogQuery blog) {
 
         return blogRepository.findAll(new Specification<Blog>() {
@@ -64,6 +79,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Blog> listBlog(Pageable p, String query) {
+        return blogRepository.findByQuery(query, p);
+    }
+
+    @Override
     public List<Blog> listRecommendBlogTop(Integer size) {
         Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
         Pageable pageable = PageRequest.of(0, size, sort);
@@ -87,7 +107,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog updateBlog(Long id, Blog blog) {
         Optional<Blog> b = blogRepository.findById(id);
-        if (b.isPresent()){
+        if (!b.isPresent()){
             throw new NotFoundException("The blog is not existing");
         }
         Blog blog1 = b.get();

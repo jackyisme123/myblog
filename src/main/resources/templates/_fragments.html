@@ -24,10 +24,12 @@
             <a href="#" class="item m-mobile-hide toggle_item" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>Timeline</a>
             <a href="#" class="item m-mobile-hide toggle_item" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i>About</a>
             <div class="right item m-mobile-hide toggle_item">
-                <div class="ui input icon transparent inverted">
-                    <input type="text" placeholder="Search...">
-                    <i class="search icon link"></i>
-                </div>
+                <form name="search" action="#" th:action="@{/search}" target="_blank" method="post">
+                    <div class="ui input icon transparent inverted">
+                        <input type="text" placeholder="Search..." name="query" th:value="${query}">
+                        <i class="search icon link" onclick="document.forms['search'].submit()"></i>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
