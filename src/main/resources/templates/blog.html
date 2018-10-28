@@ -443,23 +443,46 @@
                 <div th:fragment="commentList">
                     <div class="ui threaded comments" style="max-width: 100%">
                         <h3 class="ui dividing header">Comments</h3>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://picsum.photos/100/100?image=1005">
+                        <div class="comment" th:each="comment : ${comments}">
+                            <a class="avatar" >
+                                <img src="https://picsum.photos/100/100?image=1005" th:src="@{${comment.avatar}}">
                             </a>
                             <div class="content">
-                                <a class="author">Matt</a>
+                                <a class="author"><span th:text="${comment.nickname}">Matt</span><div class="ui mini basic orange left pointing label m-padded-mini" th:if="${comment.adminComment}">Admin</div></a>
                                 <div class="metadata">
-                                    <span class="date">Today at 5:42PM</span>
+                                    <span class="date" th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
                                 </div>
-                                <div class="text">
+                                <div class="text" th:text="${comment.content}">
                                     How artistic!
                                 </div>
                                 <div class="actions">
-                                    <a class="reply" onclick="reply(this)" data-commentid="1" data-commentnickname="Matt">Reply</a>
+                                    <a class="reply" onclick="reply(this)" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id}, data-commentnickname=${comment.nickname}">Reply</a>
+                                </div>
+                            </div>
+                            <div class="comments" th:if="${#arrays.length(comment.replyComments)>0}">
+                                <div class="comment" th:each="reply : ${comment.replyComments}">
+                                    <a class="avatar" >
+                                        <img src="https://picsum.photos/100/100?image=1005" th:src="@{${reply.avatar}}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author" >
+                                            <span th:text="${reply.nickname}">Matt</span><div class="ui mini basic orange left pointing label m-padded-mini" th:if="${reply.adminComment}">Admin</div>&nbsp<span th:text="|@ ${reply.parentComment.nickname}|" style="color: #00B5AD !important;">@ Jay</span>
+                                        </a>
+                                        <div class="metadata">
+                                            <span class="date" th:text="${#dates.format(reply.createTime, 'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                        </div>
+                                        <div class="text" th:text="${reply.content}">
+                                            How artistic!
+                                        </div>
+                                        <div class="actions">
+                                            <a class="reply" onclick="reply(this)" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.id}, data-commentnickname=${reply.nickname}">Reply</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!--/*-->
                         <div class="comment">
                             <a class="avatar">
                                 <img src="https://picsum.photos/100/100?image=1005">
@@ -513,6 +536,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--*/-->
                     </div>
                 </div>
             </div>
@@ -524,16 +548,16 @@
                     <textarea name="content" placehold="Please enter comment here..."></textarea>
                 </div>
                 <div class="fields">
-                    <div class="field m-mobile-wide m-margin-bottom-small">
+                    <div class="field m-mobile-wide m-margin-bottom-small" th:if="${session.user}==null">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input type="text" name="nickname" placeholder="name">
+                            <input type="text" name="nickname" placeholder="name" th:value="${session.user}!=null ? ${session.user.nickname}">
                         </div>
                     </div>
-                    <div class="field m-mobile-wide m-margin-bottom-small">
+                    <div class="field m-mobile-wide m-margin-bottom-small" th:if="${session.user}==null">
                         <div class="ui left icon input">
                             <i class="mail icon"></i>
-                            <input type="text" name="email" placeholder="email">
+                            <input type="text" name="email" placeholder="email" th:value="${session.user}!=null ? ${session.user.email}">
                         </div>
                     </div>
                     <div class="field m-margin-bottom-small m-mobile-wide">
@@ -696,10 +720,15 @@
         }
     });
 
+    $(function () {
+        $("#comment-container").load(/*[[@{/comments/{id}(id = ${blog.id})}]]*/"comments/6");
+    });
+
     $("#commentpost-btn").click(function () {
         var boo = $('.ui.form').form('validate form');
         if(boo){
             console.log("validation successful");
+            postData();
         }else{
             console.log("validation failure");
         }
@@ -714,7 +743,7 @@
             "content" : $("[name='content']").val()
             },function(responseTxt, statusTxt, xhr){
             clearContent();
-            $(window).scrollTo($('#comment-container'), 500);
+            // $(window).scrollTo($('#comment-container'), 500);
         });
     }
     

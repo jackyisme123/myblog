@@ -63,7 +63,7 @@ public class IndexController {
         return "archives";
     }
 
-    @GetMapping("/category")
+    @GetMapping("/type")
     public String category() {
         return "category";
     }
