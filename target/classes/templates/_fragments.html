@@ -14,18 +14,18 @@
 <body>
 
 <!--nav bar-->
-<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
-    <div class="ui inverted secondary stackable menu">
-        <div class="ui container">
-            <h2 class="ui teal header item">Blog</h2>
-            <a href="#" th:href="@{/}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>Home</a>
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small m-nav-fixed-top">
+    <div class="ui inverted secondary stackable menu menu-stack">
+        <div class="ui container" style="background: #1B1C1D">
+            <img src="../static/images/logo.png" alt="" th:src="@{/images/logo.png}" style="width: 90px; height: 37px; margin-top: 10px; margin-right: 20px">
+            <a href="#" th:href="@{/}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i><span th:text="#{nav.index}">Home</span></a>
             <a href="#" th:href="@{/types/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>Category</a>
             <a href="#" th:href="@{/tags/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>Tags</a>
-            <a href="#" th:href="@{/archives/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>Timeline</a>
+            <a href="#" th:href="@{/archives}" class="item m-mobile-hide toggle_item" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>Timeline</a>
             <a href="#" th:href="@{/about}" class="item m-mobile-hide toggle_item" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i>About</a>
             <div class="right item m-mobile-hide toggle_item">
                 <form name="search" action="#" th:action="@{/search}" target="_blank" method="post">
-                    <div class="ui input icon transparent inverted">
+                    <div class="ui small input icon inverted">
                         <input type="text" placeholder="Search..." name="query" th:value="${query}">
                         <i class="search icon link" onclick="document.forms['search'].submit()"></i>
                     </div>
@@ -51,16 +51,20 @@
             </div>
             <div class="four wide column">
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Latest Blogs</h4>
-                <div class="inverted ui link list">
-                    <a href="#" class="item">???</a>
-                    <a href="#" class="item">???</a>
-                    <a href="#" class="item">???</a>
+                <div id="newblog-container">
+                    <div class="inverted ui link list" th:fragment="newblogList">
+                        <a href="#" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">???</a>
+                        <!--/*-->
+                        <a href="#" class="item">???</a>
+                        <a href="#" class="item">???</a>
+                        <!--*/-->
+                    </div>
                 </div>
             </div>
             <div class="four wide column">
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Contact</h4>
                 <div class="inverted ui link list">
-                    <a href="#" class="item">Email Address: jackyisme123@gmail.com</a>
+                    <a href="#" class="item">Email: <span th:text="#{index.email}">jackyisme123@gmail.com</span></a>
                     <a href="#" class="item">QQ: 13715772</a>
                     <a href="#" class="item">Wechat: nicuige</a>
                 </div>
@@ -85,6 +89,10 @@
     <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
     <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
     <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+        $("#newblog-container").load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
+
 </th:block>
 </body>
 </html>

@@ -177,6 +177,39 @@ body {
     display: none !important;
 }
 
+/*-----nav fixed at top of the screen-----*/
+.m-nav-fixed-top {
+    position: fixed !important;
+    height: 65px !important;
+    z-index: 99 !important;
+}
+
+.m-top-margin-for-nav{
+    margin-top: 50px !important;
+}
+
+.m-top-margin-for-nav-small{
+    margin-top: 40px !important;
+}
+
+.m-top-margin-for-nav-tiny{
+    margin-top: 20px !important;
+}
+
+.m-top-margin-for-nav-mini{
+    margin-top: 10px !important;
+}
+
+h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+    display: block;
+    content: " ";
+    height: 65px;
+    margin-top: -65px;
+    visibility: hidden;
+}
+
+
+
 @media screen and (max-width: 768px) {
     .m-mobile-hide {
         display: none !important;

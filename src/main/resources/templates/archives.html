@@ -31,7 +31,7 @@
     </a>
 </nav>
 <!--content-->
-<div class="m-padded-tb-large m-container-small">
+<div class="m-padded-tb-large m-container-small m-top-margin-for-nav-mini">
     <div class="ui container">
         <!-- header -->
         <div class="ui segment top attached padded">
@@ -40,13 +40,31 @@
                     <h3 class="ui teal header">Time Line</h3>
                 </div>
                 <div class="column right aligned">
-                    <h3 class="ui header orange m-inline-block m-text-thin">14</h3> &nbsp&nbspin Total
+                    <h3 class="ui header orange m-inline-block m-text-thin" th:text="${blogCount}">14</h3> &nbsp&nbspin Total
                 </div>
             </div>
         </div>
         <!--content-->
-        <h3 class="ui center aligned header">2017</h3>
-        <div class="ui fluid vertical menu">
+        <th:block th:each="item : ${archiveMap}">
+        <h3 class="ui center aligned header" th:text="${item.key}">2017</h3>
+        <div class="ui fluid vertical large menu">
+            <a href="#" class="item" target="_blank" th:each="blog : ${item.value}" th:href="@{/blog/{id}(id=${blog.id})}">
+                <span>
+                    <i class="teal caret right icon"></i><span th:text="|${blog.title}&nbsp&nbsp&nbsp&nbsp|">tealabcdefg</span>
+                    <span class="ui mini image label">
+                        <img src="https://picsum.photos/100/100?image=1005" alt=""
+                             class="ui avatar image" th:src="@{${blog.user.avatar}}" style="height: 50px; width: 50px;">
+                        <span th:text="|${blog.user.nickname}">Jacky</span>
+                    </span>
+                    &nbsp&nbsp&nbsp
+                    <!--<div class="ui mini transparent label m-padded-tiny m-text-thin" th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">Sep 3rd</div>-->
+                    <div class="ui mini transparent disabled input">
+                        <input type="text" placeholder="Sep 3rd" th:value="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">
+                    </div>
+                </span>
+                <div class="ui orange basic small label m-padded-mini m-text-thin" th:text="${blog.flag}">original</div>
+            </a>
+            <!--/*-->
             <a href="#" class="item" target="_blank">
                 <span>
                     <i class="mini teal circle icon"></i>tealabcdefg
@@ -61,14 +79,10 @@
                 </span>
                 <div class="ui orange basic left pointing label m-padded-mini">original</div>
             </a>
-            <a href="#" class="item" target="_blank">
-                <span>
-                    <i class="mini teal circle icon"></i>tealabcdefg
-                    <div class="ui teal basic left pointing label m-padded-mini">Sep 3rd</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">original</div>
-            </a>
+            <!--*/-->
         </div>
+        </th:block>
+        <!--/*-->
         <h3 class="ui center aligned header">2016</h3>
         <div class="ui fluid vertical menu">
             <a href="#" class="item" target="_blank">
@@ -117,7 +131,7 @@
                 <div class="ui orange basic left pointing label m-padded-mini">original</div>
             </a>
         </div>
-
+        <!--*/-->
     </div>
 </div>
 <br>

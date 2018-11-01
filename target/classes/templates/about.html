@@ -31,7 +31,7 @@
     </a>
 </nav>
 <!--content-->
-<div class="m-padded-tb-large m-container">
+<div class="m-padded-tb-large m-container m-top-margin-for-nav-mini">
     <div class="ui container">
         <div class="ui stackable grid">
             <div class="eleven wide column">
@@ -44,35 +44,26 @@
                     <div class="header">About Me</div>
                 </div>
                 <div class="ui attached segment">
-                    <p class="m-text">ABCD Song by Kids TV - The nursery rhymes channel for kindergarten aged children.
-                        These kids songs are great for learning </p>
-                    <p class="m-text">the alphabet, numbers, shapes, colors and lots more. We are a one stop shop for
-                        your children</p>
+                    <p class="m-text">Hi, I am a Computer Science student who graduated from University of Canterbury</p>
+                    <p class="m-text">I am living in Christchurch, New Zealand now. I am glad to share my life in the blog.</p>
+                    <p class="m-text">If you have any question or any bug you found, please don't be hesitated to contact with me.</p>
                 </div>
                 <div class="ui attached segment">
-                    <div class="ui orange left pointing basic label">IT</div>
-                    <div class="ui orange left pointing basic label">IT</div>
-                    <div class="ui orange left pointing basic label">IT</div>
-                    <div class="ui orange left pointing basic label">IT</div>
+                    <div class="ui orange left pointing basic label">Software Engineer</div>
                 </div>
                 <div class="ui attached segment">
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">Java</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">Js</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">C</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">C#</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">Node</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">React</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">Mysql</div>
-                    <div class="ui teal left pointing basic label m-margin-tb-tiny">PHP</div>
+                    <div class="ui teal small tag label m-margin-tb-tiny">hiking</div>
+                    <div class="ui teal small tag label m-margin-tb-tiny">coding</div>
+                    <div class="ui teal small tag label m-margin-tb-tiny">travelling</div>
                 </div>
                 <div class="ui bottom attached segment">
-                    <a href="#" class="ui circular icon button"><i class="github icon"></i></a>
+                    <a href="#" class="ui circular icon button" th:href="@{https://github.com/jackyisme123}" target="_blank"><i class="github icon"></i></a>
                     <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>
                     <a href="#" class="ui qq circular icon button" data-content="1234567" data-position="bottom center"><i
                             class="qq icon"></i></a>
                 </div>
                 <div class="ui wechat-qr flowing popup transition hidden">
-                    <img src="../static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 110px">
+                    <img src="../static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 110px" th:src="@{/images/wechat.jpg}">
                 </div>
             </div>
         </div>

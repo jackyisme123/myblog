@@ -34,8 +34,9 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
+
 <!--content-->
-<div id="waypoint" class="m-padded-tb-large m-container-small animated fadeIn">
+<div id="waypoint" class="m-padded-tb-large m-container-small animated fadeIn m-top-margin-for-nav">
     <div class="ui container">
         <!--header-->
         <div class="ui segment top attached">
@@ -396,31 +397,34 @@
             </div>
             <!--tags-->
             <div class="m-padded-lr-responsive">
-                <a href="#" class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">IT</a>
+                <a href="#" class="ui teal tag label" th:each="tag : ${blog.tags}" th:text="${tag.name}" style="margin-right: 0.5em">IT</a>
             </div>
             <!--tips-->
-            <div class="ui segment center aligned basic">
-                <button id="payButton" class="ui basic button orange circular">Tips</button>
-            </div>
-            <div class="ui payQR flowing popup transition hidden">
-                <div class="ui orange basic label">
-                    <div class="ui images" style="font-size: inherit !important; ">
-                        <div class="image">
-                            <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
-                            <div>AliPay</div>
-                        </div>
-                        <div class="image">
-                            <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px" th:src="@{/images/wechat.jpg}">
-                            <div>WeChat</div>
+            <div th:if="${blog.appreciation}">
+                <div class="ui segment center aligned basic">
+                    <button id="payButton" class="ui basic button orange circular">Tips</button>
+                </div>
+                <div class="ui payQR flowing popup transition hidden">
+                    <div class="ui orange basic label">
+                        <div class="ui images" style="font-size: inherit !important; ">
+                            <div class="image">
+                                <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
+                                     style="width: 120px" th:src="@{/images/alipay_tip.jpg}">
+                                <div>AliPay</div>
+                            </div>
+                            <div class="image">
+                                <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
+                                     style="width: 120px" th:src="@{/images/wechat_tip.jpg}">
+                                <div>WeChat</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="ui message attached positive">
+        <div class="ui message attached positive" th:if="${blog.shareStatement}">
             <!--blog info-->
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
@@ -437,12 +441,13 @@
                 </div>
             </div>
         </div>
-        <div class="ui bottom attached segment">
+        <div class="ui bottom attached segment" th:if="${blog.commentabled}">
             <!--comment list-->
             <div class="ui segment teal" id="comment-container">
                 <div th:fragment="commentList">
                     <div class="ui threaded comments" style="max-width: 100%">
-                        <h3 class="ui dividing header">Comments</h3>
+                        <h3 class="ui header" th:classappend="${isEmpty} ? '' : 'dividing'">Comments</h3>
+                        <!--<div class="comment" th:if="${#arrays.length(comments)}==0">&nbsp&nbspYour comment will be appreciated.&nbsp&nbsp</div>-->
                         <div class="comment" th:each="comment : ${comments}">
                             <a class="avatar" >
                                 <img src="https://picsum.photos/100/100?image=1005" th:src="@{${comment.avatar}}">
@@ -481,6 +486,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <!--/*-->
                         <div class="comment">
@@ -649,6 +655,7 @@
         on: 'click',
         position: 'bottom center'
     });
+
     tocbot.init({
         // Where to render the table of contents.
         tocSelector: '.js-toc',
@@ -657,6 +664,7 @@
         // Which headings to grab inside of the contentSelector element.
         headingSelector: 'h1, h2, h3',
     });
+
     $('.toc.button').popup({
         popup: $('.toc-container.popup'),
         on: 'click',
@@ -668,7 +676,7 @@
         position: 'left center'
     });
 
-    var server = "127.0.0.1:8080";
+    var server = /*[[#{blog.serurl}]]*/"127.0.0.1:8080";
     var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
         text: server + url,

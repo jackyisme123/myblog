@@ -31,7 +31,7 @@
     </a>
 </nav>
 <!--content-->
-<div class="m-padded-tb-large m-container-small">
+<div class="m-padded-tb-large m-container-small m-top-margin-for-nav-mini">
     <div class="ui container">
         <!-- header -->
         <div class="ui segment top attached">
@@ -46,7 +46,7 @@
         </div>
         <!--content-->
         <div class="ui attached segment m-padded-tb-big">
-            <a href="#" class="ui basic left pointing large label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="@{/tags/{id}(id=${tag.id})}" th:class="${tag.id}==${activeTagId} ? 'ui teal left pointing large label m-margin-tb-tiny' : 'ui basic left pointing large label m-margin-tb-tiny'" th:if="${#arrays.length(tag.blogs)}>0">
+            <a href="#" class="ui basic left pointing large label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="${#arrays.length(tag.blogs)}>0 ? @{/tags/{id}(id=${tag.id})}" th:class="${tag.id}==${activeTagId} ? 'ui teal tag large label m-margin-tb-tiny' : 'ui tag label m-margin-tb-tiny'" style="margin-right: 1em">
                 <span th:text="${tag.name}">IT</span>
                 <div class="detail" th:text="${#arrays.length(tag.blogs)}">22</div>
             </a>
@@ -125,12 +125,12 @@
                                     </div>
                                 </div>
                                 <div class="five wide column right aligned">
-                                    <a href="#" class="ui teal basic label m-padded-mini m-text-thin" th:text="${blog.type.name}" th:href="@{/types/{id}(id=${blog.type.id})}">IT</a>
+                                    <a href="#" class="ui orange basic label m-padded-mini m-text-thin" th:text="${blog.type.name}" th:href="@{/types/{id}(id=${blog.type.id})}">IT</a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column">
-                                    <a href="#" class="ui basic left pointing label m-padded-tiny m-text-thin" th:each="blogtag : ${blog.tags}" th:text="${blogtag.name}" th:href="@{/tags/{id}(id=${blogtag.id})}" th:class="${blogtag.id}==${activeTagId} ? 'ui teal left pointing label m-padded-tiny m-text-thin' : 'ui teal basic left pointing label m-padded-tiny m-text-thin'">Vine</a>
+                                    <a href="#" class="ui basic left pointing label m-padded-tiny m-text-thin" th:each="blogtag : ${blog.tags}" th:text="${blogtag.name}" th:href="@{/tags/{id}(id=${blogtag.id})}" th:class="${blogtag.id}==${activeTagId} ? 'ui teal tag mini label m-text-thin' : 'ui tag mini label m-text-thin'" style="margin-right: 0.5em">Vine</a>
                                 </div>
                             </div>
                         </div>

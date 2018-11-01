@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class CommentControl {
@@ -29,7 +30,9 @@ public class CommentControl {
 
     @GetMapping("/comments/{blogId}")
     public String comments(@PathVariable Long blogId, Model model){
-        model.addAttribute("comments", commentService.listCommentByBlogId(blogId));
+        List<Comment> commentList = commentService.listCommentByBlogId(blogId);
+        model.addAttribute("comments", commentList);
+        model.addAttribute("isEmpty", commentList.isEmpty());
         return "blog :: commentList";
     }
 
