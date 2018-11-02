@@ -1,5 +1,6 @@
 package com.yuanandrui.blog.web;
 
+import com.yuanandrui.blog.po.Blog;
 import com.yuanandrui.blog.po.Comment;
 import com.yuanandrui.blog.po.User;
 import com.yuanandrui.blog.service.BlogService;
@@ -7,7 +8,6 @@ import com.yuanandrui.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +28,21 @@ public class CommentControl {
     @Value("${comment.avatar}")
     private String avatar;
 
+    @Value("${comment.delete}")
+    private String deletedComment;
+
     @GetMapping("/comments/{blogId}")
-    public String comments(@PathVariable Long blogId, Model model){
+    public String comments(@PathVariable Long blogId, Model model, HttpSession session){
         List<Comment> commentList = commentService.listCommentByBlogId(blogId);
-        model.addAttribute("comments", commentList);
-        model.addAttribute("isEmpty", commentList.isEmpty());
+        User user = (User) session.getAttribute("user");
+        Boolean isEmpty = commentList.isEmpty();
+        model.addAttribute("isEmpty", isEmpty);
+        if(!isEmpty){
+            model.addAttribute("comments", commentList);
+            if(user != null){
+                model.addAttribute("isAdmin", commentList.get(0).getBlog().getUser().getId() == user.getId());
+            }
+        }
         return "blog :: commentList";
     }
 
@@ -52,5 +62,18 @@ public class CommentControl {
         }
         commentService.saveComment(comment);
         return "redirect:/comments/" + blogId;
+    }
+
+    @GetMapping("/comments/{id}/delete")
+    public String delete(@PathVariable Long id, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        System.out.println(id);
+        Comment comment = commentService.listCommentById(id);
+        Blog blog = comment.getBlog();
+        User author = blog.getUser();
+        if(user != null && user.getId() == author.getId()){
+            commentService.update(deletedComment, comment.getId());
+        }
+        return "redirect:/comments/" + blog.getId();
     }
 }

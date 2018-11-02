@@ -1,6 +1,8 @@
 package com.yuanandrui.blog.service;
 
 import com.yuanandrui.blog.po.Blog;
+import com.yuanandrui.blog.po.Comment;
+import com.yuanandrui.blog.po.User;
 import com.yuanandrui.blog.vo.BlogQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,5 @@ public interface BlogService {
     Blog updateBlog(Long id, Blog blog);
 
     void deleteBlog(Long id);
-
 
 }

@@ -10,4 +10,7 @@ public interface CommentService {
 
     Comment saveComment(Comment comment);
 
+    Comment listCommentById(Long id);
+
+    void update(String commentContent, Long commentId);
 }

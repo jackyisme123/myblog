@@ -2,8 +2,11 @@ package com.yuanandrui.blog.service;
 
 import com.yuanandrui.blog.NotFoundException;
 import com.yuanandrui.blog.dao.BlogRepository;
+import com.yuanandrui.blog.dao.CommentRepository;
 import com.yuanandrui.blog.po.Blog;
+import com.yuanandrui.blog.po.Comment;
 import com.yuanandrui.blog.po.Type;
+import com.yuanandrui.blog.po.User;
 import com.yuanandrui.blog.util.MarkdownUtils;
 import com.yuanandrui.blog.util.MyBeanUtils;
 import com.yuanandrui.blog.vo.BlogQuery;
@@ -25,6 +28,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public Optional<Blog> getBlog(Long id) {
@@ -145,4 +151,9 @@ public class BlogServiceImpl implements BlogService {
     public void deleteBlog(Long id) {
         blogRepository.deleteById(id);
     }
+
+
+
+
+
 }

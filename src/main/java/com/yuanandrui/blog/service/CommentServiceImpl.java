@@ -74,4 +74,15 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreateTime(new Date());
         return commentRepository.save(comment);
     }
+
+    @Override
+    public Comment listCommentById(Long id) {
+        Comment comment = commentRepository.findById(id).get();
+        return comment;
+    }
+
+    @Override
+    public void update(String commentContent, Long commentId) {
+        commentRepository.updateCommentById(commentContent, commentId);
+    }
 }

@@ -8,3 +8,4 @@ spring:
 
 
 comment.avatar: /images/avatar.png
+comment.delete: This comment has been deleted by admin.
