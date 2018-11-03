@@ -1,0 +1,13 @@
+INSERT INTO blog.t_type (id, name) VALUES (1, 'Error Log');
+INSERT INTO blog.t_type (id, name) VALUES (2, 'YUAN');
+INSERT INTO blog.t_type (id, name) VALUES (3, 'JavaSript');
+INSERT INTO blog.t_type (id, name) VALUES (4, 'Newnew');
+INSERT INTO blog.t_type (id, name) VALUES (5, '1个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (6, '2个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (7, '3个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (8, '4个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (9, '5个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (10, '6个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (11, '7个木头人');
+INSERT INTO blog.t_type (id, name) VALUES (12, '15个老虎');
+INSERT INTO blog.t_type (id, name) VALUES (14, '123木头人');

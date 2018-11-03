@@ -1,0 +1,1 @@
+INSERT INTO blog.t_user (id, avatar, create_time, email, nickname, password, type, update_time, username) VALUES (1, 'https://picsum.photos/100/100?image=1005', '2018-10-17 15:43:58', 'jackyisme123@163.com', 'Killtime', '96e79218965eb72c92a549dd5a330112', 1, '2018-10-17 15:45:11', 'jackyisme123');
