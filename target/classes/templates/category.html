@@ -40,15 +40,15 @@
                     <h3 class="ui teal header">Category</h3>
                 </div>
                 <div class="column right aligned">
-                    <h3 class="ui header orange m-inline-block m-text-thin" th:text="${#arrays.length(types)}">14</h3> &nbsp&nbspin Total
+                    <h3 class="ui header orange m-inline-block m-text-thin" th:text="${total}">14</h3> &nbsp&nbspin Total
                 </div>
             </div>
         </div>
         <!--content-->
         <div class="ui attached segment m-padded-tb-big">
             <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
-                <a href="#" class="ui button" th:text="${type.name}" th:href="${#arrays.length(type.blogs)}>0 ? @{/types/{id}(id=${type.id})}" th:class="${type.id}==${activeTypeId} ? 'teal ui button' : 'ui small basic button'">abcdedf</a>
-                <a class="ui basic left pointing label" th:text="${#arrays.length(type.blogs)}" th:classappend="${type.id}==${activeTypeId} ? 'teal'" href="#" th:href="${#arrays.length(type.blogs)}>0 ? @{/types/{id}(id=${type.id})}">24</a>
+                <a href="#" class="ui button" th:text="${type.value.name}" th:href="${#arrays.length(type.value.blogs)}>0 ? @{/types/{id}(id=${type.value.id})}" th:class="${type.value.id}==${activeTypeId} ? 'teal ui button' : 'ui small basic button'">abcdedf</a>
+                <a class="ui basic left pointing label" th:text="${#arrays.length(type.key)}" th:classappend="${type.value.id}==${activeTypeId} ? 'teal'" href="#" th:href="${#arrays.length(type.key)}>0 ? @{/types/{id}(id=${type.value.id})}">24</a>
             </div>
             <!--/*-->
             <div class="ui labeled button m-margin-tb-tiny">
@@ -83,7 +83,7 @@
         </div>
 
         <div class="ui top attached teal segment">
-            <div class="ui padded segment vertical m-padded-tb-big m-mobile-lr-clear" th:each="blog : ${page.content}">
+            <div class="ui padded segment vertical m-padded-tb-big m-mobile-lr-clear" th:each="blog : ${page.content}" th:if="${blog.published}">
                 <div class="ui middle aligned mobile reversed stackable grid">
                     <div class="eleven wide column">
                         <h3 class="ui header"><a href="" class="m-black" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">你真的理解什么是财富自由吗？</a></h3>

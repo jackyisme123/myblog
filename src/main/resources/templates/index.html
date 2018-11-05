@@ -49,7 +49,7 @@
                 </div>
                 <!--content-->
                 <div class="ui segment attached">
-                    <div class="ui padded segment vertical m-padded-tb-big m-mobile-lr-clear" th:each="blog : ${page.content}">
+                    <div class="ui padded segment vertical m-padded-tb-big m-mobile-lr-clear" th:each="blog : ${page.content}" th:if="${blog.published}">
                         <div class="ui middle aligned mobile reversed stackable grid">
                             <div class="eleven wide column">
                                 <h3 class="ui header"><a href="" class="m-black" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">你真的理解什么是财富自由吗？</a></h3>
@@ -407,7 +407,7 @@
                     <div class="ui secondary segment">
                         <i class="bookmark icon"></i>Recommendation
                     </div>
-                    <div class="ui segment" th:each="recommendBlog : ${recommendBlogs}">
+                    <div class="ui segment" th:each="recommendBlog : ${recommendBlogs}" th:if="${recommendBlog.published}">
                         <a href="#" target="_blank" class="m-black m-text-thin" th:text="${recommendBlog.title}" th:href="@{/blog/{id}(id=${recommendBlog.id})}">User Stroy</a>
                     </div>
                     <!--/*-->

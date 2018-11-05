@@ -12,10 +12,7 @@ import com.yuanandrui.blog.util.MyBeanUtils;
 import com.yuanandrui.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,7 +75,16 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> listBlog(Pageable p) {
-        return blogRepository.findAll(p);
+        return blogRepository.findAll(new Specification<Blog>(){
+
+            @Override
+            public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                predicates.add(cb.equal(root.<Boolean>get("published"), true));
+                cq.where(predicates.toArray(new Predicate[predicates.size()]));
+                return null;
+            }
+        }, p);
     }
 
     @Override
@@ -117,7 +123,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Long countBlog() {
-        return blogRepository.count();
+        Map<String, List<Blog>>  map = archiveBlog();
+        Long myCountBlog = Long.valueOf(0);
+        for (Map.Entry<String, List<Blog>> entry : map.entrySet())
+        {
+            myCountBlog += entry.getValue().size();
+        }
+        return myCountBlog;
     }
 
     @Transactional

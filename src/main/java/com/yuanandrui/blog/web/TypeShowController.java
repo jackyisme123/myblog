@@ -1,5 +1,6 @@
 package com.yuanandrui.blog.web;
 
+import com.yuanandrui.blog.po.Blog;
 import com.yuanandrui.blog.po.Type;
 import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TypeService;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
 public class TypeShowController {
@@ -36,9 +40,22 @@ public class TypeShowController {
         }
         BlogQuery blogQuery = new BlogQuery();
         blogQuery.setTypeId(id);
-        model.addAttribute("types", types);
+        Map<Integer, Type> typePublishedNum = new TreeMap<>();
+        int total = 0;
+        for(Type type : types){
+            int count = 0;
+            for(Blog blog : type.getBlogs()){
+                if(blog.isPublished()){
+                    count++;
+                }
+                typePublishedNum.put(count, type);
+            }
+            total += count;
+        }
+        model.addAttribute("types", typePublishedNum);
         model.addAttribute("page", blogService.listBlog(pageable, blogQuery));
         model.addAttribute("activeTypeId", id);
+        model.addAttribute("total", total);
         return "category";
     }
 }

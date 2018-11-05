@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
+    url: jdbc:mysql://yuan-blog-mysql.c8lyfans8ny9.ap-southeast-2.rds.amazonaws.com:3306/blog?useUnicode=true&characterEncoding=utf-8
+    username: yuan
+    password: 12345678
   jpa:
     hibernate:
       ddl-auto: none
@@ -15,4 +15,4 @@ logging:
     com.yuanandrui: info
   file: log/blog-pro.log
 server:
-  port: 8081
+  port: 8080

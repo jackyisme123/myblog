@@ -53,7 +53,7 @@
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Latest Blogs</h4>
                 <div id="newblog-container">
                     <div class="inverted ui link list" th:fragment="newblogList">
-                        <a href="#" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">???</a>
+                        <a href="#" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" th:if="${blog.published}">???</a>
                         <!--/*-->
                         <a href="#" class="item">???</a>
                         <a href="#" class="item">???</a>

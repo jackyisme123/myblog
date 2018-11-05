@@ -19,7 +19,6 @@ public class Type {
     @OneToMany(mappedBy = "type")
     private List<Blog> blogs = new ArrayList<>();
 
-
     public List<Blog> getBlogs() {
         return blogs;
     }

@@ -48,7 +48,7 @@
         <th:block th:each="item : ${archiveMap}">
         <h3 class="ui center aligned header" th:text="${item.key}">2017</h3>
         <div class="ui fluid vertical large menu">
-            <a href="#" class="item" target="_blank" th:each="blog : ${item.value}" th:href="@{/blog/{id}(id=${blog.id})}">
+            <a href="#" class="item" target="_blank" th:each="blog : ${item.value}" th:href="@{/blog/{id}(id=${blog.id})}" th:if="${blog.published}">
                 <span>
                     <i class="teal caret right icon"></i><span th:text="|${blog.title}&nbsp&nbsp&nbsp&nbsp|">tealabcdefg</span>
                     <span class="ui mini image label">
