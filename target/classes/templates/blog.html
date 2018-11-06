@@ -397,7 +397,7 @@
             </div>
             <!--tags-->
             <div class="m-padded-lr-responsive">
-                <a href="#" class="ui teal tag label" th:each="tag : ${blog.tags}" th:text="${tag.name}" style="margin-right: 0.5em">IT</a>
+                <a href="#" class="ui teal tag label" th:each="tag : ${blog.tags}" th:text="${tag.name}" style="margin-right: 0.5em" th:href="@{/tags/{id}(id=${tag.id})}">IT</a>
             </div>
             <!--tips-->
             <div th:if="${blog.appreciation}">

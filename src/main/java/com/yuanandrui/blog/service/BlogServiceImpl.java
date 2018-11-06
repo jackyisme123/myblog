@@ -67,6 +67,7 @@ public class BlogServiceImpl implements BlogService {
                 if(blog.isRecommend()){
                     predicates.add(cb.equal(root.<Boolean>get("recommend"), blog.isRecommend()));
                 }
+                predicates.add(cb.equal(root.<Boolean>get("published"), true));
                 cq.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;
             }
@@ -99,7 +100,11 @@ public class BlogServiceImpl implements BlogService {
             @Override
             public Predicate toPredicate(Root<Blog> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
                 Join join = root.join("tags");
-                return cb.equal(join.get("id"), tagId);
+                List<Predicate> predicates = new ArrayList<>();
+                predicates.add(cb.equal(root.<Boolean>get("published"), true));
+                predicates.add(cb.equal(join.get("id"), tagId));
+                cq.where(predicates.toArray(new Predicate[predicates.size()]));
+                return null;
             }
         }, p);
     }

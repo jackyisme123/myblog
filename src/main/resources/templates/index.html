@@ -369,9 +369,9 @@
                         </div>
                     </div>
                     <div class="ui teal segment">
-                        <a href="#" target="_blank" class="ui teal small tag label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="@{/tags/{id}(id=${tag.id})}" style="margin-right: 0.5em">
+                        <a href="#" target="_blank" class="ui teal small tag label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="@{/tags/{id}(id=${tag.id})}" style="margin-right: 0.5em" th:unless="${tag.publishedBlogNum} == 0">
                             <span th:text="${tag.name}">IT</span>
-                            <div class="detail" th:text="${#arrays.length(tag.blogs)}">15</div>
+                            <div class="detail" th:text="${tag.publishedBlogNum}">15</div>
                         </a>
                         <!--/*-->
                         <a href="#" target="_blank" class="ui teal label m-margin-tb-tiny">

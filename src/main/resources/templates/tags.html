@@ -40,15 +40,16 @@
                     <h3 class="ui teal header">Tag</h3>
                 </div>
                 <div class="column right aligned">
-                    <h3 class="ui header orange m-inline-block m-text-thin" th:text="${#arrays.length(tags)}">14</h3> &nbsp&nbspin Total
+                    <h3 class="ui header orange m-inline-block m-text-thin" th:text="${total}">14</h3> &nbsp&nbspin Total
                 </div>
             </div>
         </div>
         <!--content-->
         <div class="ui attached segment m-padded-tb-big">
-            <a href="#" class="ui basic left pointing large label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="${#arrays.length(tag.blogs)}>0 ? @{/tags/{id}(id=${tag.id})}" th:class="${tag.id}==${activeTagId} ? 'ui teal tag large label m-margin-tb-tiny' : 'ui tag label m-margin-tb-tiny'" style="margin-right: 1em">
+            <input type="hidden" th:value="${tags}" class="tags_hidden">
+            <a href="#" class="ui basic left pointing large label m-margin-tb-tiny" th:each="tag : ${tags}" th:href="${#arrays.length(tag.blogs)}>0 ? @{/tags/{id}(id=${tag.id})}" th:class="${tag.id}==${activeTagId} ? 'ui teal tag large label m-margin-tb-tiny' : 'ui tag label m-margin-tb-tiny'" style="margin-right: 1em" th:unless="${tag.publishedBlogNum} == 0">
                 <span th:text="${tag.name}">IT</span>
-                <div class="detail" th:text="${#arrays.length(tag.blogs)}">22</div>
+                <div class="detail" th:text="${tag.publishedBlogNum}">22</div>
             </a>
             <!--/*-->
             <a href="#" target="_blank" class="ui basic left pointing large label m-margin-tb-tiny">
@@ -455,6 +456,10 @@
     $(".menu_toggle").click(function () {
         $(".toggle_item").toggleClass("m-mobile-hide");
     });
+
+</script>
+<script>
+console.log($('.tags_hidden').val());
 
 </script>
 </body>

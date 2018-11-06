@@ -1,6 +1,8 @@
 package com.yuanandrui.blog.web;
 
 import com.yuanandrui.blog.NotFoundException;
+import com.yuanandrui.blog.po.Blog;
+import com.yuanandrui.blog.po.Tag;
 import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TagService;
 import com.yuanandrui.blog.service.TypeService;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -33,7 +37,25 @@ public class IndexController {
                         Model model)    {
         model.addAttribute("page", blogService.listBlog(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
-        model.addAttribute("tags", tagService.listTagTop(10));
+        List<Tag> tags = tagService.listTagTop(10000);
+        for(Tag tag : tags){
+            int tag_num = 0;
+            int count = 0;
+            List<Blog> blogs = tag.getBlogs();
+            for(Blog blog :blogs){
+                if(blog.isPublished()){
+                    count++;
+                }
+            }
+            if(count != 0){
+                tag_num++;
+            }
+            tag.setPublishedBlogNum(count);
+            if(tag_num >= 8){
+                break;
+            }
+        }
+        model.addAttribute("tags", tags);
         model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(8));
         return "index";
     }

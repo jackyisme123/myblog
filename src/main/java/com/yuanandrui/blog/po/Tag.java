@@ -16,6 +16,16 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private List<Blog> blogs = new ArrayList<>();
 
+    private int publishedBlogNum = 0;
+
+    public int getPublishedBlogNum() {
+        return publishedBlogNum;
+    }
+
+    public void setPublishedBlogNum(int publishedBlogNum) {
+        this.publishedBlogNum = publishedBlogNum;
+    }
+
     public List<Blog> getBlogs() {
         return blogs;
     }
