@@ -3,6 +3,7 @@ package com.yuanandrui.blog.web;
 import com.yuanandrui.blog.NotFoundException;
 import com.yuanandrui.blog.po.Blog;
 import com.yuanandrui.blog.po.Tag;
+import com.yuanandrui.blog.po.Type;
 import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TagService;
 import com.yuanandrui.blog.service.TypeService;
@@ -33,13 +34,31 @@ public class IndexController {
     private TagService tagService;
 
     @GetMapping("/")
-    public String index(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String index(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model)    {
         model.addAttribute("page", blogService.listBlog(pageable));
-        model.addAttribute("types", typeService.listTypeTop(6));
+        List<Type> types = typeService.listTypeTop(10000);
+        for(Type type:types){
+            List<Blog> typeBlogs = type.getBlogs();
+            int countType = 0;
+            int typeNum = 0;
+            for(Blog typeBlog : typeBlogs){
+                if(typeBlog.isPublished()){
+                    countType++;
+                }
+            }
+            if(countType!=0){
+                typeNum++;
+            }
+            type.setPublishedBlogNum(countType);
+            if(typeNum > 5){
+                break;
+            }
+        }
+        model.addAttribute("types", types);
         List<Tag> tags = tagService.listTagTop(10000);
         for(Tag tag : tags){
-            int tag_num = 0;
+            int tagNum = 0;
             int count = 0;
             List<Blog> blogs = tag.getBlogs();
             for(Blog blog :blogs){
@@ -48,15 +67,15 @@ public class IndexController {
                 }
             }
             if(count != 0){
-                tag_num++;
+                tagNum++;
             }
             tag.setPublishedBlogNum(count);
-            if(tag_num >= 8){
+            if(tagNum >= 8){
                 break;
             }
         }
         model.addAttribute("tags", tags);
-        model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(8));
+        model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(5));
         return "index";
     }
 

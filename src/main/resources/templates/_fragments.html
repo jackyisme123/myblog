@@ -18,11 +18,11 @@
     <div class="ui inverted secondary stackable menu menu-stack">
         <div class="ui container" style="background: #1B1C1D">
             <img src="../static/images/logo.png" alt="" th:src="@{/images/logo.png}" style="width: 90px; height: 37px; margin-top: 10px; margin-right: 20px">
-            <a href="#" th:href="@{/}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i><span th:text="#{nav.index}">Home</span></a>
-            <a href="#" th:href="@{/types/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>Category</a>
-            <a href="#" th:href="@{/tags/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>Tags</a>
-            <a href="#" th:href="@{/archives}" class="item m-mobile-hide toggle_item" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i>Timeline</a>
-            <a href="#" th:href="@{/about}" class="item m-mobile-hide toggle_item" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i>About</a>
+            <a href="#" th:href="@{/}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i><span th:text="#{nav.home}">Home</span></a>
+            <a href="#" th:href="@{/types/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i><span th:text="#{nav.category}">Category</span></a>
+            <a href="#" th:href="@{/tags/-1}" class="item m-mobile-hide toggle_item" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i><span th:text="#{nav.tags}">Tags</span></a>
+            <a href="#" th:href="@{/archives}" class="item m-mobile-hide toggle_item" th:classappend="${n==4} ? 'active'"><i class="mini clone icon"></i><span th:text="#{nav.timeline}">Timeline</span></a>
+            <a href="#" th:href="@{/about}" class="item m-mobile-hide toggle_item" th:classappend="${n==5} ? 'active'"><i class="mini info icon"></i><span th:text="#{nav.about}">About</span></a>
             <div class="right item m-mobile-hide toggle_item">
                 <form name="search" action="#" th:action="@{/search}" target="_blank" method="post">
                     <div class="ui small input icon inverted">
@@ -65,8 +65,8 @@
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Contact</h4>
                 <div class="inverted ui link list">
                     <a href="#" class="item">Email: <span th:text="#{index.email}">jackyisme123@gmail.com</span></a>
-                    <a href="#" class="item">QQ: 13715772</a>
-                    <a href="#" class="item">Wechat: nicuige</a>
+                    <a href="#" class="item"> QQ: <span th:text="#{index.qq}">13715772</span></a>
+                    <a href="#" class="item">Wechat: <span th:text="#{index.wechat}">nicuige</span></a>
                 </div>
             </div>
             <div class="six wide column">

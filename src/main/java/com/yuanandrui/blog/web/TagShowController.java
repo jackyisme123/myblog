@@ -27,7 +27,7 @@ public class TagShowController {
 
     @GetMapping("/tags/{id}")
     public String tags(@PathVariable Long id,
-                        @PageableDefault(size = 8, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+                        @PageableDefault(size = 6, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model){
 
         List<Tag> tags = tagService.listTagTop(10000);

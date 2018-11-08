@@ -1,6 +1,7 @@
 package com.yuanandrui.blog.web;
 
 import com.yuanandrui.blog.po.Blog;
+import com.yuanandrui.blog.po.Tag;
 import com.yuanandrui.blog.po.Type;
 import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TypeService;
@@ -14,11 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Controller
 public class TypeShowController {
@@ -31,7 +28,7 @@ public class TypeShowController {
 
     @GetMapping("/types/{id}")
     public String types(@PathVariable Long id,
-                        @PageableDefault(size = 8, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+                        @PageableDefault(size = 6, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model){
 
         List<Type> types = typeService.listTypeTop(10000);
@@ -40,20 +37,22 @@ public class TypeShowController {
         }
         BlogQuery blogQuery = new BlogQuery();
         blogQuery.setTypeId(id);
-        Map<Integer, Type> typePublishedNum = new TreeMap<>();
         int total = 0;
         for(Type type : types){
             int count = 0;
-            for(Blog blog : type.getBlogs()){
+            List<Blog> blogs = type.getBlogs();
+            for(Blog blog :blogs){
                 if(blog.isPublished()){
                     count++;
                 }
-                typePublishedNum.put(count, type);
             }
-            total += count;
+            if(count != 0){
+                total++;
+            }
+            type.setPublishedBlogNum(count);
         }
-        model.addAttribute("types", typePublishedNum);
-        model.addAttribute("page", blogService.listBlog(pageable, blogQuery));
+        model.addAttribute("types", types);
+        model.addAttribute("page", blogService.listBlogPageable(pageable, blogQuery));
         model.addAttribute("activeTypeId", id);
         model.addAttribute("total", total);
         return "category";

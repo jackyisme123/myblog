@@ -16,6 +16,16 @@ public class Type {
     @NotBlank(message = "Category name can not be empty.")
     private String name;
 
+    private int publishedBlogNum = 0;
+
+    public int getPublishedBlogNum() {
+        return publishedBlogNum;
+    }
+
+    public void setPublishedBlogNum(int publishedBlogNum) {
+        this.publishedBlogNum = publishedBlogNum;
+    }
+
     @OneToMany(mappedBy = "type")
     private List<Blog> blogs = new ArrayList<>();
 
@@ -26,7 +36,6 @@ public class Type {
     public void setBlogs(List<Blog> blogs) {
         this.blogs = blogs;
     }
-
 
     public Type() {
     }

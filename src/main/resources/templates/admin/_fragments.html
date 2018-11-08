@@ -15,9 +15,9 @@
     <div class="ui inverted secondary stackable menu">
         <div class="ui container">
             <h2 class="ui teal header item">Blog Management</h2>
-            <a href="#" th:href="@{/admin/blogs}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>Blog</a>
-            <a href="#" th:href="@{/admin/types}" class="item m-mobile-hide toggle_item" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i>Category</a>
-            <a href="#" th:href="@{/admin/tags}" class="item m-mobile-hide toggle_item" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i>Tags</a>
+            <a href="#" th:href="@{/admin/blogs}" class="item m-mobile-hide toggle_item" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i><span th:text="#{nav.blogs}">Blogs</span></a>
+            <a href="#" th:href="@{/admin/types}" class="item m-mobile-hide toggle_item" th:classappend="${n==2} ? 'active'"><i class="mini idea icon"></i><span th:text="#{nav.category}">Category</span></a>
+            <a href="#" th:href="@{/admin/tags}" class="item m-mobile-hide toggle_item" th:classappend="${n==3} ? 'active'"><i class="mini tags icon"></i><span th:text="#{nav.tags}">Tags</span></a>
             <div class="right toggle_item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
@@ -50,18 +50,22 @@
             </div>
             <div class="four wide column">
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Latest Blogs</h4>
-                <div class="inverted ui link list">
-                    <a href="#" class="item">???</a>
-                    <a href="#" class="item">???</a>
-                    <a href="#" class="item">???</a>
+                <div id="newblog-container">
+                    <div class="inverted ui link list" th:fragment="newblogList">
+                        <a href="#" class="item" th:each="blog : ${newblogs}" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" th:if="${blog.published}">???</a>
+                        <!--/*-->
+                        <a href="#" class="item">???</a>
+                        <a href="#" class="item">???</a>
+                        <!--*/-->
+                    </div>
                 </div>
             </div>
             <div class="four wide column">
                 <h4 class="ui inverted head m-text-thin m-text-spaced">Contact</h4>
                 <div class="inverted ui link list">
-                    <a href="#" class="item">Email Address: jackyisme123@gmail.com</a>
-                    <a href="#" class="item">QQ: 13715772</a>
-                    <a href="#" class="item">Wechat: nicuige</a>
+                    <a href="#" class="item">Email: <span th:text="#{index.email}">jackyisme123@gmail.com</span></a>
+                    <a href="#" class="item"> QQ: <span th:text="#{index.qq}">13715772</span></a>
+                    <a href="#" class="item">Wechat: <span th:text="#{index.wechat}">nicuige</span></a>
                 </div>
             </div>
             <div class="six wide column">
@@ -80,6 +84,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.js"></script>
     <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+    <script>
+        $("#newblog-container").load(/*[[@{/admin/footer/newblog}]]*/"/admin/footer/newblog");
+    </script>
 </th:block>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class BlogController {
     private TagService tagService;
 
     @GetMapping("/blogs")
-    public String blogs(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String blogs(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog,
                         Model model){
         model.addAttribute("types", typeService.listType());
@@ -50,7 +50,7 @@ public class BlogController {
 
 
     @PostMapping("/blogs/search")
-    public String search(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog,
                         Model model){
         model.addAttribute("page", blogService.listBlog(pageable, blog));
@@ -104,5 +104,11 @@ public class BlogController {
         blogService.deleteBlog(id);
         attributes.addFlashAttribute("message", "success to delete");
         return REDIRECT_LIST;
+    }
+
+    @GetMapping("/footer/newblog")
+    public String newblogs(Model model){
+        model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
+        return "admin/_fragments :: newblogList";
     }
 }

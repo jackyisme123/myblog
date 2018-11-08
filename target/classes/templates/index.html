@@ -318,18 +318,18 @@
                     <div class="ui secondary segment">
                         <div class="ui two column grid">
                             <div class="column">
-                                <i class="idea icon"></i>Category
+                                <i class="idea icon"></i><span th:text="#{nav.category}">Category</span>
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank" th:href="@{/types/-1}">more<i class="angle double right icon"></i></a>
+                                <a href="#" target="_blank" th:href="@{/types/-1}"><span th:text="#{nav.more}">more</span><i class="angle double right icon"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" class="item" th:each="type : ${types}" th:href="@{/types/{id}(id=${type.id})}" target="_blank">
+                            <a href="#" class="item" th:each="type : ${types}" th:href="@{/types/{id}(id=${type.id})}" target="_blank" th:if="${type.publishedBlogNum} > 0">
                                 <span th:text="${type.name}">IT</span>
-                                <div class="ui orange basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
+                                <div class="ui orange basic left pointing label" th:text="${type.publishedBlogNum}">13</div>
                             </a>
                             <!--/*-->
                             <a href="#" class="item">
@@ -361,10 +361,10 @@
                     <div class="ui secondary segment">
                         <div class="ui two column grid">
                             <div class="column">
-                                <i class="tags icon"></i>Tags
+                                <i class="tags icon"></i><span th:text="#{nav.tags}">Tags</span>
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank" th:href="@{/tags/-1}">more<i class="angle double right icon"></i></a>
+                                <a href="#" target="_blank" th:href="@{/tags/-1}"><span th:text="#{nav.more}">more</span><i class="angle double right icon"></i></a>
                             </div>
                         </div>
                     </div>
@@ -405,7 +405,7 @@
                 <!--recommendation-->
                 <div class="ui segments m-margin-top-large">
                     <div class="ui secondary segment">
-                        <i class="bookmark icon"></i>Recommendation
+                        <i class="bookmark icon"></i><span th:text="#{nav.recommendation}">Recommendation</span>
                     </div>
                     <div class="ui segment" th:each="recommendBlog : ${recommendBlogs}" th:if="${recommendBlog.published}">
                         <a href="#" target="_blank" class="m-black m-text-thin" th:text="${recommendBlog.title}" th:href="@{/blog/{id}(id=${recommendBlog.id})}">User Stroy</a>
@@ -421,8 +421,8 @@
                 </div>
 
                 <!--QR code-->
-                <h4 class="ui horizontal divider header m-margin-top-large">Follow me</h4>
-                <div class="ui centered card" style="width: 11em">
+                <div class="ui horizontal divider header m-margin-top-large"><h4>Follow me</h4></div>
+                <div class="ui centered card" style="width: 11em;">
                     <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui rounded image">
                 </div>
             </div>

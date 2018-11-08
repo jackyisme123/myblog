@@ -397,10 +397,10 @@
         <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
             <div class="ui two column grid middle aligned">
                 <div class="column">
-                    <a href="#" th:href="@{/(page=${page.number}-1)}" th:unless="${page.first}" class="ui teal basic mini button">Previous</a>
+                    <a href="#" th:href="@{'/tags/'+${activeTagId}+'/'(page=${page.number}-1)}" th:unless="${page.first}" class="ui teal basic mini button">Previous</a>
                 </div>
                 <div class="column right aligned">
-                    <a href="#" th:href="@{/(page=${page.number}+1)}" th:unless="${page.last}" class="ui teal basic mini button">Next</a>
+                    <a href="#" th:href="@{'/tags/'+${activeTagId}+'/'(page=${page.number}+1)}" th:unless="${page.last}" class="ui teal basic mini button">Next</a>
                 </div>
             </div>
         </div>
