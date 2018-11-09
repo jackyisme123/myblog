@@ -17,8 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+import static com.yuanandrui.blog.util.SomeNumber.HUGENUMBER;
+import static com.yuanandrui.blog.util.SomeNumber.TYPEBLOGSNUMBER;
+
 @Controller
 public class TypeShowController {
+
+    private static final String CATEGORY = "category";
 
     @Autowired
     private TypeService typeService;
@@ -28,10 +33,10 @@ public class TypeShowController {
 
     @GetMapping("/types/{id}")
     public String types(@PathVariable Long id,
-                        @PageableDefault(size = 6, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+                        @PageableDefault(size = TYPEBLOGSNUMBER, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model){
 
-        List<Type> types = typeService.listTypeTop(10000);
+        List<Type> types = typeService.listTypeTop(HUGENUMBER);
         if(id == -1){
             id = types.get(0).getId();
         }
@@ -55,6 +60,6 @@ public class TypeShowController {
         model.addAttribute("page", blogService.listBlogPageable(pageable, blogQuery));
         model.addAttribute("activeTypeId", id);
         model.addAttribute("total", total);
-        return "category";
+        return CATEGORY;
     }
 }

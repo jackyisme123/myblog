@@ -16,12 +16,18 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/admin")
 public class LoginController {
 
+    private static final String LOGIN = "admin/login";
+    private static final String INDEX = "admin/index";
+    private static final String REDIRECT_ADMIN = "redirect:/admin";
+    private static final String REDIRECT_LOGOUT = "redirect:/";
+
+
     @Autowired
     private UserService userService;
 
     @GetMapping
     public String loginPage(){
-        return "admin/login";
+        return LOGIN;
     }
 
     @PostMapping("/login")
@@ -33,16 +39,16 @@ public class LoginController {
         if (user != null){
             user.setPassword(null);
             session.setAttribute("user", user);
-            return "admin/index";
+            return INDEX;
         }else{
             attributes.addFlashAttribute("message", "Username or password is not existing");
-            return "redirect:/admin";
+            return REDIRECT_ADMIN;
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("user");
-        return "redirect:/";
+        return REDIRECT_LOGOUT;
     }
 }

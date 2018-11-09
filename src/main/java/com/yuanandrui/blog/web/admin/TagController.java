@@ -17,30 +17,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import static com.yuanandrui.blog.util.SomeNumber.TAGSNUMBER;
+
 @Controller
 @RequestMapping("/admin")
 public class TagController {
+
+    private static final String TAGS = "admin/tags";
+    private static final String TAGSINPUT = "admin/tags-input";
+    private static final String REDIRECT_TAGS = "redirect:/admin/tags";
 
     @Autowired
     private TagService tagService;
 
     @GetMapping("/tags")
-    public String tags(@PageableDefault(size = 6,sort = {"id"},direction = Sort.Direction.DESC)
+    public String tags(@PageableDefault(size = TAGSNUMBER,sort = {"id"},direction = Sort.Direction.DESC)
                                     Pageable pageable, Model model) {
         model.addAttribute("page",tagService.listTag(pageable));
-        return "admin/tags";
+        return TAGS;
     }
 
     @GetMapping("/tags/input")
     public String input(Model model) {
         model.addAttribute("tag", new Tag());
-        return "admin/tags-input";
+        return TAGSINPUT;
     }
 
     @GetMapping("/tags/{id}/input")
     public String editInput(@PathVariable Long id, Model model) {
         model.addAttribute("tag", tagService.getTag(id).get());
-        return "admin/tags-input";
+        return TAGSINPUT;
     }
 
 
@@ -51,7 +57,7 @@ public class TagController {
             result.rejectValue("name","nameError","Tag name has existed.");
         }
         if (result.hasErrors()) {
-            return "admin/tags-input";
+            return TAGSINPUT;
         }
         Tag t = tagService.saveTag(tag);
         if (t == null ) {
@@ -59,7 +65,7 @@ public class TagController {
         } else {
             attributes.addFlashAttribute("message", "Success to add a tag");
         }
-        return "redirect:/admin/tags";
+        return REDIRECT_TAGS;
     }
 
 
@@ -70,7 +76,7 @@ public class TagController {
             result.rejectValue("name","nameError","Tag name has existed.");
         }
         if (result.hasErrors()) {
-            return "admin/tags-input";
+            return TAGSINPUT;
         }
         Tag t = tagService.updateTag(id,tag);
         if (t == null ) {
@@ -78,14 +84,14 @@ public class TagController {
         } else {
             attributes.addFlashAttribute("message", "Success to add a tag");
         }
-        return "redirect:/admin/tags";
+        return REDIRECT_TAGS;
     }
 
     @GetMapping("/tags/{id}/delete")
     public String delete(@PathVariable Long id,RedirectAttributes attributes) {
         tagService.deleteTag(id);
         attributes.addFlashAttribute("message", "Success to delete");
-        return "redirect:/admin/tags";
+        return REDIRECT_TAGS;
     }
 
 

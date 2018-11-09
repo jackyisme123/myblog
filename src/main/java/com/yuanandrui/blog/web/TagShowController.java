@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+import static com.yuanandrui.blog.util.SomeNumber.HUGENUMBER;
+import static com.yuanandrui.blog.util.SomeNumber.TAGBLOGSNUMBER;
+
 @Controller
 public class TagShowController {
+
+    private static final String TAGS = "tags";
 
     @Autowired
     private TagService tagService;
@@ -27,10 +32,10 @@ public class TagShowController {
 
     @GetMapping("/tags/{id}")
     public String tags(@PathVariable Long id,
-                        @PageableDefault(size = 6, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+                        @PageableDefault(size = TAGBLOGSNUMBER, sort={"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model){
 
-        List<Tag> tags = tagService.listTagTop(10000);
+        List<Tag> tags = tagService.listTagTop(HUGENUMBER);
         if(id == -1){
             id = tags.get(0).getId();
         }
@@ -52,6 +57,6 @@ public class TagShowController {
         model.addAttribute("page", blogService.listBlog(pageable, id));
         model.addAttribute("activeTagId", id);
         model.addAttribute("total", total);
-        return "tags";
+        return TAGS;
     }
 }

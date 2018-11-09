@@ -35,6 +35,7 @@ E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\service\UserService.
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\service\TypeService.java
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\dao\CommentRepository.java
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\po\Type.java
+E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\util\SomeNumber.java
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\util\MarkdownUtils.java
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\dao\UserRepository.java
 E:\my_repositories\myblog\src\main\java\com\yuanandrui\blog\NotFoundException.java

@@ -19,6 +19,9 @@ import java.util.List;
 @Controller
 public class CommentControl {
 
+    private static final String BLOGCOMMENTLIST = "blog :: commentList";
+    private static final String REDIRECT_COMMENTS = "redirect:/comments/";
+
     @Autowired
     private CommentService commentService;
 
@@ -43,7 +46,7 @@ public class CommentControl {
                 model.addAttribute("isAdmin", commentList.get(0).getBlog().getUser().getId() == user.getId());
             }
         }
-        return "blog :: commentList";
+        return BLOGCOMMENTLIST;
     }
 
     @PostMapping("/comments")
@@ -61,7 +64,7 @@ public class CommentControl {
             comment.setAdminComment(false);
         }
         commentService.saveComment(comment);
-        return "redirect:/comments/" + blogId;
+        return REDIRECT_COMMENTS + blogId;
     }
 
     @GetMapping("/comments/{id}/delete")
@@ -74,6 +77,6 @@ public class CommentControl {
         if(user != null && user.getId() == author.getId()){
             commentService.update(deletedComment, comment.getId());
         }
-        return "redirect:/comments/" + blog.getId();
+        return REDIRECT_COMMENTS + blog.getId();
     }
 }

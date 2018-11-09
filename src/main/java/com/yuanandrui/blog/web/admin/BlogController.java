@@ -20,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
+import static com.yuanandrui.blog.util.SomeNumber.ADMINBLOGNUMBER;
+import static com.yuanandrui.blog.util.SomeNumber.RECOMMENDBLOGNUMBER;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -39,7 +42,7 @@ public class BlogController {
     private TagService tagService;
 
     @GetMapping("/blogs")
-    public String blogs(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String blogs(@PageableDefault(size = ADMINBLOGNUMBER, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog,
                         Model model){
         model.addAttribute("types", typeService.listType());
@@ -50,7 +53,7 @@ public class BlogController {
 
 
     @PostMapping("/blogs/search")
-    public String search(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = ADMINBLOGNUMBER, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog,
                         Model model){
         model.addAttribute("page", blogService.listBlog(pageable, blog));
@@ -108,7 +111,7 @@ public class BlogController {
 
     @GetMapping("/footer/newblog")
     public String newblogs(Model model){
-        model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
+        model.addAttribute("newblogs", blogService.listRecommendBlogTop(RECOMMENDBLOGNUMBER));
         return "admin/_fragments :: newblogList";
     }
 }

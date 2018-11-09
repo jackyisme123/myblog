@@ -17,30 +17,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import static com.yuanandrui.blog.util.SomeNumber.TYPESNUMBER;
+
 @Controller
 @RequestMapping("/admin")
 public class TypeController {
+
+    private static final String TYPES = "admin/types";
+    private static final String TYPESINPUT = "admin/types_input";
+    private static final String REDIRECT_TYPES = "redirect:/admin/types";
 
     @Autowired
     private TypeService typeService;
 
     @GetMapping("/types")
-    public String list(@PageableDefault(size = 6, sort = {"id"}, direction = Sort.Direction.DESC)
+    public String list(@PageableDefault(size = TYPESNUMBER, sort = {"id"}, direction = Sort.Direction.DESC)
                                    Pageable pageable, Model model){
         model.addAttribute("page", typeService.listType(pageable));
-        return "admin/types";
+        return TYPES;
     }
 
     @GetMapping("/types/input")
     public String input(Model model){
         model.addAttribute("type", new Type());
-        return "admin/types_input";
+        return TYPESINPUT;
     }
 
     @GetMapping("types/{id}/input")
     public String editInput(@PathVariable Long id, Model model){
         model.addAttribute("type", typeService.getType(id).get());
-        return "admin/types_input";
+        return TYPESINPUT;
     }
 
     @PostMapping("/types")
@@ -51,7 +57,7 @@ public class TypeController {
         }
 
         if (result.hasErrors()){
-            return "admin/types_input";
+            return TYPESINPUT;
         }
 
         Type t = typeService.saveType(type);
@@ -61,7 +67,7 @@ public class TypeController {
         }else{
             attributes.addFlashAttribute("message", "Success to add a type");
         }
-        return "redirect:/admin/types";
+        return REDIRECT_TYPES;
     }
 
     @PostMapping("/types/{id}")
@@ -72,7 +78,7 @@ public class TypeController {
         }
 
         if (result.hasErrors()){
-            return "admin/types_input";
+            return TYPESINPUT;
         }
 
         Type t = typeService.updateType(id, type);
@@ -82,13 +88,13 @@ public class TypeController {
         }else{
             attributes.addFlashAttribute("message", "Success to update");
         }
-        return "redirect:/admin/types";
+        return REDIRECT_TYPES;
     }
 
     @GetMapping("/types/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
         typeService.deleteType(id);
         attributes.addFlashAttribute("message", "Success to delete");
-        return "redirect:/admin/types";
+        return REDIRECT_TYPES;
     }
 }

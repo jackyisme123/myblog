@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ArchiveShowController {
 
+    private static final String ARCHIVES = "archives";
+
     @Autowired
     private BlogService blogService;
 
@@ -16,6 +18,6 @@ public class ArchiveShowController {
     public String archives(Model model){
         model.addAttribute("archiveMap", blogService.archiveBlog());
         model.addAttribute("blogCount", blogService.countBlog());
-        return "archives";
+        return ARCHIVES;
     }
 }

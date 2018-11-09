@@ -1,13 +1,11 @@
 package com.yuanandrui.blog.web;
 
-import com.yuanandrui.blog.NotFoundException;
 import com.yuanandrui.blog.po.Blog;
 import com.yuanandrui.blog.po.Tag;
 import com.yuanandrui.blog.po.Type;
 import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TagService;
 import com.yuanandrui.blog.service.TypeService;
-import com.yuanandrui.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,8 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.yuanandrui.blog.util.SomeNumber.*;
+
 @Controller
 public class IndexController {
+
+    private static final String INDEX = "index";
+    private static final String SEARCH = "search";
+    private static final String BLOG = "blog";
+    private static final String FRAGMENTSNEWBLOGLIST = "_fragments :: newblogList";
 
     @Autowired
     private BlogService blogService;
@@ -34,10 +39,10 @@ public class IndexController {
     private TagService tagService;
 
     @GetMapping("/")
-    public String index(@PageableDefault(size = 6, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String index(@PageableDefault(size = BLOGNUMBERS, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model)    {
         model.addAttribute("page", blogService.listBlog(pageable));
-        List<Type> types = typeService.listTypeTop(10000);
+        List<Type> types = typeService.listTypeTop(HUGENUMBER);
         for(Type type:types){
             List<Blog> typeBlogs = type.getBlogs();
             int countType = 0;
@@ -51,12 +56,12 @@ public class IndexController {
                 typeNum++;
             }
             type.setPublishedBlogNum(countType);
-            if(typeNum > 5){
+            if(typeNum > BLOGTYPES){
                 break;
             }
         }
         model.addAttribute("types", types);
-        List<Tag> tags = tagService.listTagTop(10000);
+        List<Tag> tags = tagService.listTagTop(HUGENUMBER);
         for(Tag tag : tags){
             int tagNum = 0;
             int count = 0;
@@ -70,35 +75,35 @@ public class IndexController {
                 tagNum++;
             }
             tag.setPublishedBlogNum(count);
-            if(tagNum >= 8){
+            if(tagNum >= BLOGTAGS){
                 break;
             }
         }
         model.addAttribute("tags", tags);
-        model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(5));
-        return "index";
+        model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(RECOMMENDBLOGNUMBER));
+        return INDEX;
     }
 
     @PostMapping("/search")
-    public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = BLOGNUMBERS, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          Model model,
                          @RequestParam String query){
         model.addAttribute("page", blogService.listBlog(pageable, "%"+query+"%"));
         model.addAttribute("query", query);
-        return "search";
+        return SEARCH;
     }
 
     @GetMapping("/blog/{id}")
     public String blog(@PathVariable Long id, Model model) {
         model.addAttribute("blog", blogService.getAndConvert(id));
-        return "blog";
+        return BLOG;
     }
 
 
     @GetMapping("/footer/newblog")
     public String newblogs(Model model){
-        model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
-        return "_fragments :: newblogList";
+        model.addAttribute("newblogs", blogService.listRecommendBlogTop(RECOMMENDBLOGNUMBER));
+        return FRAGMENTSNEWBLOGLIST;
     }
 
 }
