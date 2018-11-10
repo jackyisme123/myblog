@@ -7,6 +7,7 @@ import com.yuanandrui.blog.service.BlogService;
 import com.yuanandrui.blog.service.TagService;
 import com.yuanandrui.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -28,6 +29,12 @@ public class IndexController {
     private static final String SEARCH = "search";
     private static final String BLOG = "blog";
     private static final String FRAGMENTSNEWBLOGLIST = "_fragments :: newblogList";
+
+    @Value("${wechat.tip}")
+    private String wechat_tip;
+
+    @Value("${alipay.tip}")
+    private String alipay_tip;
 
     @Autowired
     private BlogService blogService;
@@ -96,6 +103,8 @@ public class IndexController {
     @GetMapping("/blog/{id}")
     public String blog(@PathVariable Long id, Model model) {
         model.addAttribute("blog", blogService.getAndConvert(id));
+        model.addAttribute("alipay_tip", alipay_tip);
+        model.addAttribute("wechat_tip", wechat_tip);
         return BLOG;
     }
 

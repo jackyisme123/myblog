@@ -1,5 +1,4 @@
-2018-10-15 15:57:02.872  INFO 9536 --- [restartedMain] com.yuanandrui.blog.BlogApplication      : Starting BlogApplication on LAPTOP-4HOE93M1 with PID 9536 (E:\my_repositories\myblog\target\classes started by jacky in E:\my_repositories\myblog)
-2018-10-15 15:57:02.872  INFO 9536 --- [restartedMain] com.yuanandrui.blog.BlogApplication      : The following profiles are active: pro
-2018-10-15 15:57:05.168  WARN 9536 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2018-10-15 15:57:05.246  WARN 9536 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-2018-10-15 15:57:05.496  INFO 9536 --- [restartedMain] com.yuanandrui.blog.BlogApplication      : Started BlogApplication in 3.699 seconds (JVM running for 4.758)
+2018-11-11 02:23:14.316  INFO 1880 --- [main] c.yuanandrui.blog.BlogApplicationTests   : Starting BlogApplicationTests on LAPTOP-4HOE93M1 with PID 1880 (started by jacky in E:\my_repositories\myblog)
+2018-11-11 02:23:14.347  INFO 1880 --- [main] c.yuanandrui.blog.BlogApplicationTests   : The following profiles are active: pro
+2018-11-11 02:23:20.517  WARN 1880 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2018-11-11 02:23:21.078  INFO 1880 --- [main] c.yuanandrui.blog.BlogApplicationTests   : Started BlogApplicationTests in 7.341 seconds (JVM running for 8.32)

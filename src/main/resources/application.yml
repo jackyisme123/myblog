@@ -2,10 +2,16 @@ spring:
   thymeleaf:
     mode: HTML
   profiles:
-    active: dev
+    active: pro
   messages:
     basename: i18n/messages
 
 
-comment.avatar: /images/avatar.png
+comment.cat: /images/cat.jpg
+comment.worm: /images/worm.jpg
+comment.elephant: /images/elephant.jpg
+
 comment.delete: This comment has been deleted by admin.
+wechat.tip: /images/wechat_tip.jpg
+alipay.tip: /images/alipay_tip.jpg
+

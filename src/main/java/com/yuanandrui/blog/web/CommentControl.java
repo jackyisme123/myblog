@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class CommentControl {
@@ -28,11 +30,19 @@ public class CommentControl {
     @Autowired
     private BlogService blogService;
 
-    @Value("${comment.avatar}")
-    private String avatar;
+    @Value("${comment.cat}")
+    private String cat_img;
+
+    @Value("${comment.worm}")
+    private String worm_img;
+
+    @Value("${comment.elephant}")
+    private String elephant_img;
 
     @Value("${comment.delete}")
     private String deletedComment;
+
+    Random random = new Random();
 
     @GetMapping("/comments/{blogId}")
     public String comments(@PathVariable Long blogId, Model model, HttpSession session){
@@ -60,7 +70,9 @@ public class CommentControl {
             comment.setNickname(user.getNickname());
             comment.setEmail(user.getEmail());
         }else{
-            comment.setAvatar(avatar);
+            String[] avatarLists = {cat_img, worm_img, elephant_img};
+            System.out.println("avators:" + avatarLists[0] + "," + avatarLists[1]);
+            comment.setAvatar(avatarLists[random.nextInt(avatarLists.length)]);
             comment.setAdminComment(false);
         }
         commentService.saveComment(comment);

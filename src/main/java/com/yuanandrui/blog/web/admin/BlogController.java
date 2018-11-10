@@ -85,6 +85,9 @@ public class BlogController {
     @PostMapping("/blogs")
     public String post(Blog blog, RedirectAttributes attributes, HttpSession session){
 
+        if(blog.getFlag().equals("")){
+            blog.setFlag("original");
+        }
         blog.setUser((User)session.getAttribute("user"));
         blog.setType(typeService.getType(blog.getType().getId()).get());
         blog.setTags(tagService.listTag(blog.getTagIds()));

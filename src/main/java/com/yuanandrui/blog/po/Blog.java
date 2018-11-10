@@ -206,6 +206,7 @@ public class Blog {
 
     public void init(){
         this.tagIds = tagsToIds(this.getTags());
+
     }
 
     private String tagsToIds(List<Tag> tags) {
